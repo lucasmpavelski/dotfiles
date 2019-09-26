@@ -5,3 +5,4 @@
 compton --config ~/.config/compton.conf &
 nitrogen --restore &
 dunst &
+clipmenud &
