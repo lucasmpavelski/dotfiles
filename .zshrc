@@ -13,6 +13,10 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
+# User specific
+fpath=("$ZPLGM[HOME_DIR]/user" "${fpath[@]}")
+autoload -Uz _zpcompinit_fast
+
 ### Plugins
 
 # Completions
@@ -23,7 +27,7 @@ zplugin ice silent wait:1 atload:_zsh_autosuggest_start
 zplugin light zsh-users/zsh-autosuggestions
 
 # Syntax 
-#zplugin ice wait:1 lucid atinit'_zpcompinit_fast; zpcdreplay'
+zplugin ice wait:1 lucid atinit'_zpcompinit_fast; zpcdreplay'
 zplugin light zdharma/fast-syntax-highlighting
 
 ####
