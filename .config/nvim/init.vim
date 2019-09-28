@@ -15,6 +15,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-surround'
+Plug 'dense-analysis/ale'
 call plug#end()
 
 " NERDTree Plugin
@@ -24,6 +25,11 @@ let g:NERDTreeShowHidden=1
 
 " deoplete.nvim Plugin
 let g:deoplete#enable_at_startup = 1
+
+" ALE Plugin
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 1
 
 " Lightline Plugin
 let g:lightline = {
