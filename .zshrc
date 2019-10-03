@@ -2,108 +2,202 @@
 # ~/.zshrc
 #
 
-# Install zplugin if not installed
-if [ ! -d "${HOME}/.zplugin" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
-fi
-
-### Added by Zplugin's installer
-source "${HOME}/.zplugin/bin/zplugin.zsh"
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin's installer chunk
-
-# User specific
-fpath=("$ZPLGM[HOME_DIR]/user" "${fpath[@]}")
-autoload -Uz _zpcompinit_fast
-
-### Plugins
-
-# Completions
-zplugin ice blockf; zplugin light zsh-users/zsh-completions
-
-# Autosuggestions
-zplugin ice silent wait:1 atload:_zsh_autosuggest_start
-zplugin light zsh-users/zsh-autosuggestions
-
-# Syntax 
-zplugin ice wait:1 lucid atinit'_zpcompinit_fast; zpcdreplay'
-zplugin light zdharma/fast-syntax-highlighting
-
-####
-
+#
 # Prompt
+#
+
+# Colorful prompt
 autoload -U colors && colors
 PS1="%1~ $fg[blue] "
 
-# Paths
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.bin:$PATH
+#
+# Environment
+#
 
-# Defaults
+# Paths
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.scripts:$PATH
+
+# Variables
 export VISUAL="nvim"
 export EDITOR="nvim"
 export TERMINAL="st"
+
+# Quote pasted URLs
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
 
 # fff config
 if [ -f $HOME/.config/fff/config ]; then
     . $HOME/.config/fff/config
 fi
 
-# Enable autocompletions
-autoload -Uz compinit
-typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
-if [ $(date +'%j') != $updated_at ]; then
-  compinit -i
-else
-  compinit -C -i
-fi
-zmodload -i zsh/complist
+# Options
+setopt AUTO_CD              # Auto changes to a directory without typing cd.
+setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
+setopt CDABLE_VARS          # Change directory to a path stored in a variable.
+setopt MULTIOS              # Write to multiple descriptors.
+setopt EXTENDED_GLOB        # Use extended globbing syntax.
+unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
+                            # Use >! and >>! to bypass.
 
-# Save history so we get auto suggestions
-HISTFILE=$HOME/.zsh_history
+#
+# Aliases
+#
+
+# Source file
+. $HOME/.aliases
+
+#
+# History
+#
+
+# History file
+HISTFILE=~/.zhistory
 HISTSIZE=100000
 SAVEHIST=$HISTSIZE
 
 # Options
-setopt auto_cd # cd by typing directory name if it's not a command
-setopt auto_list # automatically list choices on ambiguous completion
-setopt auto_menu # automatically use menu completion
-setopt always_to_end # move cursor to end if word had one match
-setopt hist_ignore_all_dups # remove older duplicate entries from history
-setopt hist_reduce_blanks # remove superfluous blanks from history items
-setopt inc_append_history # save history entries as soon as they are entered
-setopt share_history # share history between different instances
-setopt correct_all # autocorrect commands
-setopt interactive_comments # allow comments in interactive shells
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing non-existent history.
 
-# Improve autocompletion style
-zstyle ':completion:*' menu select # select completions with arrow keys
-zstyle ':completion:*' group-name '' # group results by category
-zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+# Lists the ten most used commands.
+alias histat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
-# URL quote magic
-autoload -Uz url-quote-magic
-zle -N self-insert url-quote-magic
-autoload -Uz bracketed-paste-magic
-zle -N bracketed-paste bracketed-paste-magic
+#
+# Autocompletion
+#
+
+# Load autocompletion
+autoload -Uz compinit
+_comp_files=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-20))
+if (( $#_comp_files )); then
+  compinit -i -C
+else
+  compinit -i
+fi
+unset _comp_files
+
+# Options
+setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
+setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
+setopt PATH_DIRS           # Perform path search even on command names with slashes.
+setopt AUTO_MENU           # Show completion menu on a successive tab press.
+setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
+setopt AUTO_PARAM_SLASH    # If completed parameter is a directory, add a trailing slash.
+setopt EXTENDED_GLOB       # Needed for file modification glob modifiers with compinit
+unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
+unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
+
+# Caching
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
+
+# Group matches and describe.
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+
+# Fuzzy match mistyped completions.
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Increase the number of errors based on the length of the typed word. But make
+# sure to cap (at 7) the max-errors to avoid hanging.
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
+
+# Don't complete unavailable commands.
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+
+# Array completion element sorting.
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# Directories
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+zstyle ':completion:*' squeeze-slashes true
+
+# History
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+
+# Don't complete uninteresting users...
+zstyle ':completion:*:*:*:users' ignored-patterns \
+  adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+  dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
+  hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+  mailman mailnull mldonkey mysql nagios \
+  named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+  operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+  rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
+
+# ... unless we really want to.
+zstyle '*' single-ignored show
+
+# Ignore multiple entries.
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+# Kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $LOGNAME -o pid,user,command -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+
+# Man
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
+
+#
+# Synthax highlighting
+#
+
+# Source plugin
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+#
+# History substring search
+#
+
+# Source plugin
+. /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # Keybindings
-#bindkey '^[[A' history-substring-search-up
-#bindkey '^[[B' history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
-# Aliases
-alias e="$EDITOR"
-alias sz="source ~/.zshrc"
-alias ls="exa"
-alias la="ls -a"
-alias ll="ls -la"
-alias grep="grep --color=auto"
-alias diff="diff --color=auto"
-alias cp="cp -i"
-alias df="df -h"
-alias pac="sudo pacman --color=auto"
-alias merge="xrdb -merge ~/.Xresources"
-alias mirrors="sudo reflector --score 100 --fastest 25 \
-    --sort rate --save /etc/pacman.d/mirrorlist --verbose"
-alias temp="watch sensors"
-alias dots='/usr/bin/git --git-dir=/home/crian/.dotfiles/ --work-tree=/home/crian'
+#
+# Autosuggestions
+#
+
+# Source plugin
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
