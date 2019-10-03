@@ -81,20 +81,4 @@ export PS1='\W \[\e[34m\] \[\e[0m\]'
 export LS_COLORS="$LS_COLORS:ow=1;35:tw=1;35:"
 
 # aliases
-alias e="$EDITOR"
-alias sb="source ~/.bashrc"
-alias ls="exa"
-alias la="ls -a"
-alias ll="ls -la"
-alias grep="grep --color=auto"
-alias diff="diff --color=auto"
-alias cp="cp -i"
-alias df="df -h"
-alias pac="sudo pacman --color=auto"
-alias merge="xrdb -merge ~/.Xresources"
-alias mirrors="sudo reflector --score 100 --fastest 25 \
-    --sort rate --save /etc/pacman.d/mirrorlist --verbose"
-alias temp="watch sensors"
-alias dots="/usr/bin/git --git-dir=/home/crian/.dotfiles/ --work-tree=/home/crian"
-alias dwmconfig="$EDITOR ~/.suckless/dwm/config.h"
-alias stconfig="$EDITOR ~/.suckless/st/config.h"
+. ~/.aliases
