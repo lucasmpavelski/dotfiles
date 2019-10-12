@@ -24,17 +24,63 @@ st*font: crisp:size=12:antialias=true:autohint=true
 st*fontalt0: siji:size=12:antialias=true:autohint=true
 st*fontalt1: RobotoMono Nerd Font:size=12:antialias=true:autohint=true
 st*alpha: 1
+st*borderpx: 40
 
 !--------------
 ! xterm config
 !--------------
 
-xterm*faceName: Iosevka Nerd Font:antialias=true:autohint=true
-xterm*faceSize: 12
-xterm*internalBorder: 10
-xterm*vt100*geometry: 70x20
-xterm*saveLines: 16384
-xterm*loginShell: true
-xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
 xterm*termName: xterm-256color
-xterm*eightBitInput: false
+xterm*locale: true
+xterm*utf8: 1
+xterm*utf8Fonts: always
+xterm*dynamicColors: true
+
+xterm*toolBar: false
+xterm*scrollBar: false
+xterm*geometry: 80x24
+xterm*internalBorder: 40
+
+xterm*cursorColor: reverse
+xterm*cursorBlink: true
+xterm*cursorOffTime: 300
+xterm*cursorOnTime: 800
+xterm*cursorUnderLine: false
+xterm*pointerShape: XTerm
+
+xterm*bellIsUrgent: false
+xterm*bellSupressTime: 100
+xterm*marginBell: false
+xterm*visualBell: true
+
+xterm*highlightColor: XtDefaultForeground
+xterm*highlightReverse: true
+xterm*highlightSelection: true
+xterm*highlightTextColor: XtDefaultBackground
+
+xterm*faceName: crisp:size=12
+xterm*faceSize: 12
+xterm*renderFont: true
+xterm*boldColors: false
+xterm*forceBoxChars: false
+xterm*limitFontsets: 5
+xterm*scaleHeight: 1.0
+
+xterm*jumpScroll: true
+xterm*multiScroll: true
+xterm*saveLines: 9999
+xterm*scrollKey: true
+xterm*scrollTtyKeypress: true
+xterm*scrollTtyOutput: false
+
+xterm*backarrowKey: false
+xterm*metaSendsEscape: true
+xterm*ttyModes: erase ^?
+
+xterm*selectToClipboard: true
+xterm*translations: #override \n\
+	Ctrl Shift <KeyPress>C: select-end(SELECT, CLIPBOARD) \n\
+	Ctrl Shift <KeyPress>V: insert-selection(SELECT, CLIPBOARD) \n\
+	Ctrl Shift <KeyPress>Next: smaller-vt-font() \n\
+	Ctrl Shift <KeyPress>Prior: larger-vt-font() \n\
+	Ctrl Shift <KeyPress>Home: set-vt-font(d)
