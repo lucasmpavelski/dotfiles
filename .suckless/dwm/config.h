@@ -1,48 +1,32 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx    = 2;   /* border pixel of windows */
-static const unsigned int gappx       = 15;  /* gaps between windows */
-static const unsigned int snap        = 32;  /* snap pixel */
-static const int showbar              = 1;   /* 0 means no bar */
-static const int topbar               = 1;   /* 0 means bottom bar */
-static const int horizpadbar          = 0;   /* horizontal padding for statusbar */
-static const int vertpadbar           = 8;   /* vertical padding for statusbar */
-static const char *fonts[]            = {
+static const unsigned int borderpx   = 2;        /* border pixel of windows */
+static const unsigned int gappx      = 10;        /* gaps between windows */
+static const unsigned int snap       = 32;       /* snap pixel */
+static const int showbar             = 1;        /* 0 means no bar */
+static const int topbar              = 1;        /* 0 means bottom bar */
+static const char *fonts[]           = {
     "crisp:size=12:antialias=true:autohint=true",
     "siji:size=12:antialias=true:autohint=true"
 };
-static const char dmenufont[]         = "crisp:size=12:antialias=true:autohint=true";
-static const char normfgcolor[]       = "#c6c8d1";
-static const char normbgcolor[]       = "#161821";
-static const char normbordercolor[]   = "#6b7089";
-static const char selfgcolor[]        = "#84a0c6";
-static const char selbgcolor[]        = "#161821";
-static const char selbordercolor[]    = "#84a0c6";
-static const char titlefgcolor[]      = "#89b8c2";
-static const char titlebgcolor[]      = "#161821";
-static const char titlebordercolor[]  = "#161821";
-static const char col_black[]         = "#161821";
-static const char col_red[]           = "#e27878";
-static const char col_yellow[]        = "#e2a478";
-static const char col_white[]         = "#c6c8d1";
-static const unsigned int baralpha    = OPAQUE;
-static const unsigned int borderalpha = OPAQUE;
-static const char *colors[][3]        = {
-	/*                   fg            bg         border   */
-	[SchemeNorm]  = { normfgcolor, normbgcolor, normbordercolor },
-	[SchemeSel]   = { selfgcolor, selbgcolor, selbordercolor },
+static const char dmenufont[]        = "monospace:size=10";
+static const char normfgcolor[]      = "#c6c8d1";
+static const char normbgcolor[]      = "#161821";
+static const char normbordercolor[]  = "#6b7089";
+static const char selfgcolor[]       = "#84a0c6";
+static const char selbgcolor[]       = "#161821";
+static const char selbordercolor[]   = "#84a0c6";
+static const char titlefgcolor[]     = "#89b8c2";
+static const char titlebgcolor[]     = "#161821";
+static const char titlebordercolor[] = "#161821";
+static const char col_red[]          = "#e27878";
+static const char *colors[][3]       = {
+	/*                fg            bg                border   */
+	[SchemeNorm]  = { normfgcolor,  normbgcolor,      normbordercolor },
+	[SchemeSel]   = { selfgcolor,   selbgcolor,       selbordercolor },
 	[SchemeTitle] = { titlefgcolor, titlebordercolor, titlebordercolor },
-	[SchemeWarn]  =	{ selfgcolor, normbgcolor, normbordercolor },
-	[SchemeUrgent]=	{ col_white, col_red,    col_red },
-};
-static const unsigned int alphas[][3]      = {
-	/*                fg      bg        border     */
-	[SchemeNorm]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitle] = { OPAQUE, baralpha, borderalpha },
-	[SchemeWarn]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeUrgent]= { OPAQUE, baralpha, borderalpha },
+	[SchemeUrg]   = { col_red,      col_red,          col_red   },
 };
 
 /* tagging */
@@ -61,7 +45,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
 #include "gaplessgrid.c"
 static const Layout layouts[] = {
@@ -70,10 +54,6 @@ static const Layout layouts[] = {
 	{ "[]",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "[]",      gaplessgrid },
-	{ "[]",      bstack },
-	{ "[]",      bstackhoriz },
-	{ "[]",      centeredmaster },
-/*	{ ">M>",      centeredfloatingmaster }, */
 	{ NULL,       NULL },
 };
 
@@ -96,6 +76,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmn_run", dmenumon, NULL };
 static const char *dmenupwr[] = { "dmn_power", NULL };
 static const char *dmenuclp[] = { "dmn_clip", NULL };
+static const char *dmenuweb[] = { "dmn_web" , NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "70x20", NULL };
@@ -104,6 +85,10 @@ static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "5%+", "unmut
 static const char *voldowncmd[] = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
 static const char *briupcmd[] = { "xbacklight", "-inc", "10", NULL };
 static const char *bridowncmd[] = { "xbacklight", "-dec", "10", NULL };
+static const char *plyrplay[] = { "playerctl", "play", NULL };
+static const char *plyrstop[] = { "playerctl", "stop", NULL };
+static const char *plyrnext[] = { "playerctl", "next", NULL };
+static const char *plyrprev[] = { "playerctl", "previous", NULL };
 
 #include <X11/XF86keysym.h>
 
@@ -112,10 +97,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Escape, spawn,          {.v = dmenupwr } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = dmenuclp } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = dmenuweb } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY,                       XK_F9,     spawn,          {.v = plyrplay } },
+	{ MODKEY,                       XK_F10,    spawn,          {.v = plyrstop } },
+	{ MODKEY,                       XK_F11,    spawn,          {.v = plyrnext } },
+	{ MODKEY,                       XK_F12,    spawn,          {.v = plyrprev } },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          ESHCMD("google-chrome-stable") },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          ESHCMD("pcmanfm") },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          ESHCMD("spotify") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
@@ -131,8 +122,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ControlMask,           XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
@@ -144,8 +134,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_plus,   setgaps,        {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_plus,   setgaps,        {.i = 0  } },
 	{ MODKEY|ShiftMask,             XK_Escape, quit,           {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
