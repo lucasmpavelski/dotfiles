@@ -12,6 +12,7 @@ alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias cp="cp -i"
 alias df="df -h"
+alias c="clear"
 alias pac="sudo pacman --color=auto"
 alias merge="xrdb -merge ~/.Xresources"
 alias mirrors="sudo reflector --score 100 --fastest 25 \
