@@ -13,8 +13,8 @@ Plug 'cocopon/iceberg.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins' }
-Plug 'tpope/vim-surround'
+Plug 'junegunn/goyo.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
 call plug#end()
 
@@ -22,9 +22,6 @@ call plug#end()
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeShowHidden=1
-
-" deoplete.nvim Plugin
-let g:deoplete#enable_at_startup = 1
 
 " ALE Plugin
 let g:ale_sign_column_always = 1
@@ -82,10 +79,10 @@ set novisualbell
 " Disable error bell
 set noerrorbells
 
-" Disable backup/swap
-set nobackup
-set nowritebackup
-set noswapfile
+" Backup and swap dir
+set backupdir=/tmp//
+set directory=/tmp//
+set undodir=/tmp//
 
 " Mouse support
 set mouse=a
