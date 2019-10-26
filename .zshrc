@@ -33,6 +33,9 @@ if [ -f $HOME/.config/fff/config ]; then
     . $HOME/.config/fff/config
 fi
 
+# pfetch config
+export PF_INFO="title os kernel pkgs memory wm de shell term editor palette"
+
 # Options
 setopt AUTO_CD              # Auto changes to a directory without typing cd.
 setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
