@@ -8,19 +8,19 @@
 
 # Colorful prompt
 autoload -U colors && colors
-PS1="%1~ $fg[blue] "
+PS1="%1~ $fg[blue]> "
 
 #
 # Environment
 #
 
 # Paths
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.bin:$HOME/.scripts:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.bin:$PATH
 
 # Variables
 export VISUAL="nvim"
 export EDITOR="nvim"
-export TERMINAL="st"
+export TERM="st"
 
 # Quote pasted URLs
 autoload -Uz url-quote-magic
@@ -181,7 +181,8 @@ zstyle ':completion:*:manuals.(^1*)' insert-sections true
 #
 
 # Source plugin
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 #
 # History substring search
@@ -200,4 +201,3 @@ bindkey '^[[B' history-substring-search-down
 
 # Source plugin
 . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
