@@ -37,5 +37,8 @@ fi
 # remap caps to esc
 setxkbmap -option caps:escape
 
+# set cursor
+xsetroot -cursor_name left_ptr
+
 # start dwm
 exec dwm
