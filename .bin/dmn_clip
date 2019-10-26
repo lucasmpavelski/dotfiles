@@ -7,4 +7,4 @@ y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
-clipmenu -p "Clipmenu:" -i -f -fn "$font" -l "$h" -x "$x" -y "$y" -wi "$w"
+clipmenu -p "Clip:" -i -f -fn "$font" -l "$h" -x "$x" -y "$y" -wi "$w"
