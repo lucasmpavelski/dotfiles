@@ -8,7 +8,7 @@
 
 # Colorful prompt
 autoload -U colors && colors
-PS1="%1~ $fg[blue]> "
+PROMPT="%1~ %F{blue}>%f "
 
 #
 # Environment
@@ -54,6 +54,14 @@ unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
 
 # Source file
 . $HOME/.aliases
+
+#
+# fzf
+#
+
+# Source files
+. /usr/share/fzf/key-bindings.zsh
+. /usr/share/fzf/completion.zsh
 
 #
 # History
