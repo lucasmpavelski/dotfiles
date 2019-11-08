@@ -1,5 +1,0 @@
-#!/bin/sh
-
-. ~/.config/cwm/lemonbar/bar_var
-
-~/.config/cwm/lemonbar/bar_panel | lemonbar -d -p -n "$n" -g "$g" -f "$f1" -f "$f2" -B "$BG" -F "$FG" | sh
