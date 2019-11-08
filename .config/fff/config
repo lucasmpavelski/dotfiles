@@ -15,8 +15,23 @@ export FFF_LS_COLORS=1
 # (On by default)
 export FFF_HIDDEN=1
 
+# Directory color [0\-9]
+export FFF_COL1=2
+
+# Status background color [0\-9]
+export FFF_COL2=7
+
+# Selection color [0\-9] (copied/moved files)
+export FFF_COL3=6
+
+# Cursor color [0\-9]
+export FFF_COL4=1
+
+# Status foreground color [0\-9]
+export FFF_COL5=0
+
 # File Opener
-#export FFF_OPENER="xdg-open"
+#export FFF_OPENER="xdg\-open"
 
 # Enable or disable CD on exit.
 # Default: '1'
@@ -51,8 +66,8 @@ export FFF_FAV8=
 export FFF_FAV9=
 
 # w3m-img offsets.
-export FFF_W3M_XOFFSET=10
-export FFF_W3M_YOFFSET=10
+export FFF_W3M_XOFFSET=0
+export FFF_W3M_YOFFSET=0
 
 # File format.
 # Customize the item string.
