@@ -40,5 +40,8 @@ setxkbmap -option caps:escape
 # set cursor
 xsetroot -cursor_name left_ptr
 
+# load monitor calibration profile
+xcalib -d :0 /usr/share/color/icc/B140HAN01_2.icm
+
 # start dwm
 exec dwm
