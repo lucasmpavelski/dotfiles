@@ -37,6 +37,23 @@ fi
 export PF_INFO="title os kernel pkgs memory wm de shell term editor palette"
 
 # Options
+setopt INTERACTIVE_COMMENTS # Enable comments in interactive shell.
+setopt RC_QUOTES            # Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'.
+setopt LONG_LIST_JOBS       # List jobs in the long format by default.
+setopt AUTO_RESUME          # Attempt to resume existing job before creating a new process.
+setopt NOTIFY               # Report status of background jobs immediately.
+setopt COMBINING_CHARS      # Combine zero-length punctuation characters (accents)
+                            # with the base character.
+unsetopt BG_NICE            # Don't run all background jobs at a lower priority.
+unsetopt HUP                # Don't kill jobs on shell exit.
+unsetopt CHECK_JOBS         # Don't report on jobs when shell exit.
+unsetopt MAIL_WARNING       # Don't print a warning message if a mail file has been accessed.
+
+#
+# Directory
+#
+
+# Options
 setopt AUTO_CD              # Auto changes to a directory without typing cd.
 setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
 setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
@@ -62,6 +79,10 @@ unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
 # Source files
 . /usr/share/fzf/key-bindings.zsh
 . /usr/share/fzf/completion.zsh
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS='--height 60% --reverse --border --preview "bat {}"'
 
 #
 # History
@@ -130,6 +151,7 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' '+r:|?=**'
 
 # Fuzzy match mistyped completions.
 zstyle ':completion:*' completer _complete _match _approximate
@@ -147,6 +169,10 @@ zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
 # Directories
+if (( ! ${+LS_COLORS} )); then
+  # Locally use same LS_COLORS definition from utility module, in case it was not set
+  local LS_COLORS='di=1;34:ln=35:so=32:pi=33:ex=31:bd=1;36:cd=1;33:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+fi
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
@@ -192,7 +218,6 @@ zstyle ':completion:*:manuals.(^1*)' insert-sections true
 #
 
 # Source plugin
-#. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 #
