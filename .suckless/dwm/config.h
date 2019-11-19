@@ -45,7 +45,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 #include "gaplessgrid.c"
 static const Layout layouts[] = {
@@ -76,7 +76,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmn_run", dmenumon, NULL };
 static const char *dmenupwr[] = { "dmn_power", NULL };
 static const char *dmenuclp[] = { "dmn_clip", NULL };
-static const char *dmenuweb[] = { "dmn_web" , NULL };
+static const char *dmenuweb[] = { "dmn_web", NULL };
+static const char *dmenunet[] = { "networkmanager_dmenu", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "70x20", NULL };
@@ -98,16 +99,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Escape, spawn,          {.v = dmenupwr } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = dmenuclp } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = dmenuweb } },
+	{ MODKEY,                       XK_n,      spawn,          {.v = dmenunet } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_F9,     spawn,          {.v = plyrplay } },
 	{ MODKEY,                       XK_F10,    spawn,          {.v = plyrstop } },
 	{ MODKEY,                       XK_F11,    spawn,          {.v = plyrnext } },
 	{ MODKEY,                       XK_F12,    spawn,          {.v = plyrprev } },
+	{ MODKEY,                       XK_b,      spawn,          ESHCMD("xdg-open $(dmn_browse)") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          ESHCMD("google-chrome-stable") },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          ESHCMD("pcmanfm") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          ESHCMD("spotify") },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
