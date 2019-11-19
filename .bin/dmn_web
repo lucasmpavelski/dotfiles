@@ -1,14 +1,14 @@
 #!/bin/sh
 
 set -- $(dimensions)
-w=$(echo "$1 / 3" | bc)
+w=$(echo "$1 - 2" | bc)
 x=$(( $1 / 2 - $w / 2 ))
 y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
 URL="https://www.google.com/search?q="
-QUERY=$(echo '' | dmenu -p "Web Search:" -i -f -fn "$font" -l "$h" -x "$x" -y "$y" -wi "$w")
+QUERY=$(echo '' | dmenu -p "Web Search:" -i -f -fn "$font" -wi "$w")
 if [ -n "$QUERY" ]; then
 	google-chrome-stable --new-window "${URL}${QUERY}"
 fi

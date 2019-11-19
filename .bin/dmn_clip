@@ -1,10 +1,10 @@
 #!/bin/sh
 
 set -- $(dimensions)
-w=$(echo "$1 / 3" | bc)
+w=$(echo "$1 - 2" | bc)
 x=$(( $1 / 2 - $w / 2 ))
 y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
-clipmenu -p "Clip:" -i -f -fn "$font" -l "$h" -x "$x" -y "$y" -wi "$w"
+clipmenu -p "Clip:" -i -f -fn "$font" -wi "$w"

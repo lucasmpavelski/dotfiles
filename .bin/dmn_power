@@ -1,13 +1,13 @@
 #!/bin/sh
 
 set -- $(dimensions) "$@"
-w=$(echo "$1 / 3" | bc)
+w=$(echo "$1 - 2" | bc)
 x=$(( $1 / 2 - $w / 2 ))
 y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
-DIALOG_RESULT=$(echo -e 'lock\nlogout\nreboot\npoweroff\nexit' | dmenu -fn "$font" -x "$x" -y "$y" -wi "$w" -l "$h" -i -f -p "Power:" )
+DIALOG_RESULT=$(echo -e 'lock\nlogout\nreboot\npoweroff\nexit' | dmenu -fn "$font" -wi "$w" -i -f -p "Power:" )
 
 echo "This result is : $DIALOG_RESULT"
 sleep 1;
