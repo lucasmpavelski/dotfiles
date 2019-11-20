@@ -16,13 +16,13 @@ print_backlight() {
     echo -ne "^c#91acd1^ ^d^${bl}%"
 }
 
-print_wifiqual() {
+print_wifi() {
     wifissid="$(nmcli -t -f NAME connection show --active)"
     wifiperc="$(grep "^\s*w" /proc/net/wireless | awk '{ print int($3 * 100 / 70) "%" }')"
     echo -ne "^c#a093c7^ ^d^${wifiperc} ${wifissid}"
 }
 
-print_volume(){
+print_volume() {
     mix=`amixer get Master | tail -1`
     vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
     if [[ $mix == *\[off\]* ]]; then
@@ -33,7 +33,7 @@ print_volume(){
 }
 
 print_date() {
-    date="$(date "+%a %d %b")"
+    date="$(LC_ALL=C date "+%a %d %b")"
     echo -ne "^c#e27878^ ^d^${date}"
 }
 
@@ -44,7 +44,7 @@ print_time() {
 
 print_spotify() {
     if ! pgrep -x spotify >/dev/null; then
-    echo ""; exit
+        echo ""; exit
     fi
 
     cmd="org.freedesktop.DBus.Properties.Get"
@@ -61,7 +61,13 @@ print_spotify() {
     echo -ne "^c#c0ca8e^ ^d^${*:-%artist% - %title%}" | sed "s/%artist%/$artist/g;s/%title%/$title/g;s/%album%/$album/g"i | sed 's/&/\\&/g'
 }
 
+print_wttr() {
+	loc="Jülich"
+	wttr="$(curl -s v2.wttr.in/${loc} | grep -e "Weather" | sed 's/C,.*/C/g; s/+//g; s/.*\[0m.//g; s/.//2')"
+	echo -ne "${wttr}"
+}
+
 while true; do
-    xsetroot -name " $(print_spotify)  $(print_wifiqual)  $(print_power)  $(print_backlight)  $(print_volume)  $(print_date)  $(print_time) "
+	xsetroot -name " $(print_spotify)  $(print_wifi)  $(print_power)  $(print_backlight)  $(print_volume)  $(print_date)  $(print_time) "
     sleep 1
 done
