@@ -106,7 +106,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F10,    spawn,          {.v = plyrstop } },
 	{ MODKEY,                       XK_F11,    spawn,          {.v = plyrnext } },
 	{ MODKEY,                       XK_F12,    spawn,          {.v = plyrprev } },
-	{ MODKEY,                       XK_b,      spawn,          ESHCMD("xdg-open $(dmn_browse)") },
+	{ MODKEY,                       XK_b,      spawn,          ESHCMD("mimeopen -n $(dmn_browse)") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          ESHCMD("google-chrome-stable") },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          ESHCMD("pcmanfm") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          ESHCMD("spotify") },
