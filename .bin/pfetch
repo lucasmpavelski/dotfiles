@@ -445,12 +445,14 @@ get_pkgs() {
                 has xbps-query && xbps-query -l
                 has apk        && apk info
                 has guix       && guix package --list-installed
+                has opkg       && opkg list-installed
 
                 # Directories containing packages.
                 has kiss       && printf '%s\n' /var/db/kiss/installed/*/
                 has brew       && printf '%s\n' "$(brew --cellar)/"*
                 has emerge     && printf '%s\n' /var/db/pkg/*/*/
                 has pkgtool    && printf '%s\n' /var/log/packages/*
+                has eopkg      && printf '%s\n' /var/lib/eopkg/package/*
 
                 # 'nix' requires two commands.
                 has nix-store  && {
