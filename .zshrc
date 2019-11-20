@@ -21,6 +21,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.bin:$PATH
 export VISUAL="nvim"
 export EDITOR="nvim"
 export TERM="st"
+export TERMINAL=$TERM
 
 # Quote pasted URLs
 autoload -Uz url-quote-magic
@@ -80,9 +81,10 @@ unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
 . /usr/share/fzf/key-bindings.zsh
 . /usr/share/fzf/completion.zsh
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden'
+# Configuration
+export FZF_DEFAULT_COMMAND='fd -t f -L -H -c always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--height 60% --reverse --border --preview "bat {}"'
+export FZF_DEFAULT_OPTS='--ansi --height 60% --border --preview "bat --color always {}"'
 
 #
 # History
@@ -214,11 +216,11 @@ zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
 
 #
-# Synthax highlighting
+# Syntax highlighting
 #
 
 # Source plugin
-. /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #
 # History substring search
