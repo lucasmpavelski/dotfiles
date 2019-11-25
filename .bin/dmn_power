@@ -14,7 +14,7 @@ sleep 1;
 
 if [ "$DIALOG_RESULT" = "lock" ];
 then
-    exec ~/.bin/lock
+    exec slock
 elif [ "$DIALOG_RESULT" = "logout" ];
 then
     exec killall xinit
