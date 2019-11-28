@@ -12,7 +12,7 @@
 - Terminal Emulator: `st`
 - File Manager: `fff, pcmanfm`
 - Application Launcher: `dmenu`
-- Compositor: `compton`
-- Bar: `dwm bar script`
+- Compositor: `picom`
+- Bar: `dwm bar & status script`
 - Notification: `dunst`
 - Text Editor: `nvim, nano, code`
