@@ -44,4 +44,9 @@ xsetroot -cursor_name left_ptr
 xcalib -d :0 $HOME/.local/share/color/B140HAN01_2.icm
 
 # start dwm
-exec dwm
+while true; do
+    # Log stderror to a file 
+    dwm 2> ~/.dwm.log
+    # No error logging
+    #dwm >/dev/null 2>&1
+done
