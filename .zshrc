@@ -71,7 +71,14 @@ unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
 #
 
 # Source file
-. $HOME/.aliases
+. $HOME/.zaliases
+
+#
+# Functions
+#
+
+# Source file
+. $HOME/.zfunctions
 
 #
 # fzf

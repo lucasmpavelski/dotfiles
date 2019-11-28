@@ -1,11 +1,10 @@
 #
-# ~/.aliases
+# ~/.zaliases
 #
 
 alias e="$EDITOR"
-alias sb="source ~/.bashrc"
 alias sz="source ~/.zshrc"
-alias ls="exa"
+alias ls="exa -F"
 alias la="ls -a"
 alias ll="ls -la"
 alias grep="grep --color=auto"
@@ -14,10 +13,9 @@ alias cp="cp -i"
 alias df="df -h"
 alias c="clear"
 alias pac="sudo pacman --color=auto"
+alias yu="yay -Syu --devel --timeupdate"
 alias merge="xrdb -merge ~/.Xresources"
-alias mirrors="sudo reflector --score 100 --fastest 25 \
-    --sort rate --save /etc/pacman.d/mirrorlist --verbose"
+alias mirrors="sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose"
 alias temp="watch sensors"
 alias dots="/usr/bin/git --git-dir=/home/crian/.dotfiles/ --work-tree=/home/crian"
-alias dwmconfig="$EDITOR ~/.suckless/dwm/config.h"
-alias stconfig="$EDITOR ~/.suckless/st/config.h"
+alias wttr="curl -s wttr.in/Jülich"
