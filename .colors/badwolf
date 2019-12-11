@@ -1,8 +1,7 @@
 ! X11 colors pieced together by Dmitry Medvinsky.
 ! Based on Vim colorscheme "badwolf" pieced together by Steve Losh.
-! vim: fdm=marker
 
-! Colors definition {{{
+! Colors definition
 #define   plain            #f8f6f2
 #define   snow             #ffffff
 #define   coal             #000000
@@ -28,10 +27,8 @@
 #define   toffee           #b88853
 #define   coffee           #c7915b
 #define   darkroast        #88633f
-! }}}
 
-
-! Resourses {{{
+! Resourses
 *background:  blackgravel
 *foreground:  plain
 *cursorColor: lime
@@ -63,4 +60,3 @@
 !        white
 *color7:      brightgravel
 *color15:     snow
-! }}}
