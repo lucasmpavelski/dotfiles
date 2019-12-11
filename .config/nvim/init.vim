@@ -11,57 +11,55 @@ endif
 
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
+
 Plug 'itchyny/lightline.vim'
-Plug 'cocopon/iceberg.vim' 
+	let g:lightline = { 'colorscheme': 'nord' }
+
+Plug 'arcticicestudio/nord-vim'
+
 Plug 'junegunn/goyo.vim'
+
 Plug 'tpope/vim-surround'
+
 Plug 'junegunn/fzf.vim'
+	let g:fzf_action = {
+	  \ 'ctrl-t': 'tab split',
+	  \ 'ctrl-x': 'split',
+	  \ 'ctrl-v': 'vsplit' }
+	let g:fzf_layout = { 'down': '60%' }
+	let g:fzf_layout = { 'window': 'enew' }
+	let g:fzf_layout = { 'window': '-tabnew' }
+	let g:fzf_layout = { 'window': '10new' }
+	let g:fzf_colors =
+	\ { 'fg':      ['fg', 'Normal'],
+	  \ 'bg':      ['bg', 'Normal'],
+	  \ 'hl':      ['fg', 'Comment'],
+	  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+	  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+	  \ 'hl+':     ['fg', 'Statement'],
+	  \ 'info':    ['fg', 'PreProc'],
+	  \ 'border':  ['fg', 'Ignore'],
+	  \ 'prompt':  ['fg', 'Conditional'],
+	  \ 'pointer': ['fg', 'Exception'],
+	  \ 'marker':  ['fg', 'Keyword'],
+	  \ 'spinner': ['fg', 'Label'],
+	  \ 'header':  ['fg', 'Comment'] }
+	nnoremap <silent> <leader>f :FZF<cr>
+	nnoremap <silent> <leader>F :FZF ~<cr>
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	let g:deoplete#enable_at_startup = 1
+
 Plug 'dense-analysis/ale'
+	let g:ale_sign_column_always = 1
+	let g:ale_lint_on_text_changed = 'never'
+	let g:ale_fix_on_save = 1
+
 call plug#end()
 
-" fzf Plugin
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-let g:fzf_layout = { 'down': '60%' }
-let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
-let g:fzf_layout = { 'window': '10new' }
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-nnoremap <silent> <leader>f :FZF<cr>
-nnoremap <silent> <leader>F :FZF ~<cr>
-
-" ALE Plugin
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_fix_on_save = 1
-
-" deoplete Plugin
-let g:deoplete#enable_at_startup = 1
-
-" Lightline Plugin
-let g:lightline = {
-      \ 'colorscheme': 'iceberg',
-      \ }
-
 " Theme
-set background="dark"
-colorscheme iceberg
+set background=dark
+colorscheme nord
 set termguicolors
 
 " Encoding
