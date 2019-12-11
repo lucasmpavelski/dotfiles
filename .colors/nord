@@ -23,31 +23,34 @@
 #define nord14 #A3BE8C
 #define nord15 #B48EAD
 
-*.foreground:   nord4
-*.background:   nord0
-*.cursorColor:  nord4
-*fading: 35
-*fadeColor: nord3
+! Resources
+*.foreground:  nord4
+*.background:  nord0
+*.cursorColor: nord4
+*fading:       35
+*fadeColor:    nord3
 
-*.color0: nord1
-*.color1: nord11
-*.color2: nord14
-*.color3: nord13
-*.color4: nord9
-*.color5: nord15
-*.color6: nord8
-*.color7: nord5
-*.color8: nord3
-*.color9: nord11
-*.color10: nord14
-*.color11: nord13
-*.color12: nord9
-*.color13: nord15
-*.color14: nord7
-*.color15: nord6
-
-! rofi
-rofi.color-window: nord0, nord9, nord0
-rofi.color-normal: nord0, nord4, nord0, nord0, nord9
-rofi.color-active: nord0, nord15, nord0, nord0, nord8
-rofi.color-urgent: nord0, nord14, nord0, nord0, nord14
+! Black
+*.color0:      nord1
+*.color8:      nord3
+! Red
+*.color1:      nord11
+*.color9:      nord11
+! Green
+*.color2:      nord14
+*.color10:     nord14
+! Yellow
+*.color3:      nord13
+*.color11:     nord13
+! Blue
+*.color4:      nord9
+*.color12:     nord9
+! Magenta
+*.color5:      nord15
+*.color13:     nord15
+! Cyan
+*.color6:      nord8
+*.color14:     nord7
+! White
+*.color7:      nord5
+*.color15:     nord6

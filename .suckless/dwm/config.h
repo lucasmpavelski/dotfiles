@@ -11,16 +11,16 @@ static const char *fonts[]           = {
     "siji:size=12:antialias=true:autohint=true"
 };
 static const char dmenufont[]        = "monospace:size=10";
-static const char normfgcolor[]      = "#c6c8d1";
-static const char normbgcolor[]      = "#161821";
-static const char normbordercolor[]  = "#6b7089";
-static const char selfgcolor[]       = "#84a0c6";
-static const char selbgcolor[]       = "#161821";
-static const char selbordercolor[]   = "#84a0c6";
-static const char titlefgcolor[]     = "#89b8c2";
-static const char titlebgcolor[]     = "#161821";
-static const char titlebordercolor[] = "#161821";
-static const char col_red[]          = "#e27878";
+static const char normfgcolor[]      = "#d8dee9";
+static const char normbgcolor[]      = "#2e3440";
+static const char normbordercolor[]  = "#3b4252";
+static const char selfgcolor[]       = "#81a1c1";
+static const char selbgcolor[]       = "#2e3440";
+static const char selbordercolor[]   = "#81a1c1";
+static const char titlefgcolor[]     = "#a3be8c";
+static const char titlebgcolor[]     = "#2e3440";
+static const char titlebordercolor[] = "#2e3440";
+static const char col_red[]          = "#bf616a";
 static const char *colors[][3]       = {
 	/*                fg            bg                border   */
 	[SchemeNorm]  = { normfgcolor,  normbgcolor,      normbordercolor },
@@ -40,20 +40,21 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Spotify",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 #include "gaplessgrid.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]",      tile },    /* first entry is default */
-	{ "[]",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
-	{ "[]",      gaplessgrid },
+	{ "  ",      tile },    /* first entry is default */
+	{ "  ",      NULL },    /* no layout function means floating behavior */
+	{ "  ",      monocle },
+	{ "  ",      gaplessgrid },
 	{ NULL,       NULL },
 };
 

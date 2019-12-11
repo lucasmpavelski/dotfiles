@@ -14,7 +14,7 @@ Xft.lcdfilter: lcddefault
 ! Color Scheme
 !--------------
 
-#include ".colors/iceberg"
+#include ".colors/nord"
 
 !-----------
 ! st config
@@ -24,7 +24,7 @@ st*font: crisp:size=12:antialias=true:autohint=true
 st*fontalt0: siji:size=12:antialias=true:autohint=true
 st*fontalt1: RobotoMono Nerd Font:size=12:antialias=true:autohint=true
 st*alpha: 1
-st*borderpx: 40
+st*borderpx: 20
 
 !--------------
 ! xterm config
@@ -58,7 +58,7 @@ xterm*highlightReverse: true
 xterm*highlightSelection: true
 xterm*highlightTextColor: XtDefaultBackground
 
-xterm*faceName: crisp:size=12
+xterm*faceName: GohuFont Nerd Font:size=10
 xterm*faceSize: 12
 xterm*renderFont: true
 xterm*boldColors: false

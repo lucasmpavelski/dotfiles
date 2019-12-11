@@ -46,20 +46,20 @@
     context = ctrl+shift+period
 
 [urgency_low]
-    background = "#161821"
-    foreground = "#c6c8d1"
-    frame_color = "#89b8c2"
+    background = "#2E3440"
+    foreground = "#D8DEE9"
+    frame_color = "#A3BE8C"
     timeout = 10
 
 [urgency_normal]
-    background = "#161821"
-    foreground = "#c6c8d1"
-    frame_color = "#89b8c2"
+    background = "#2E3440"
+    foreground = "#D8DEE9"
+    frame_color = "#A3BE8C"
     timeout = 10
 
 [urgency_critical]
-    background = "#e27878"
-    foreground = "#161821"
-    frame_color = "#e27878"
+    background = "#BF616A"
+    foreground = "#2E3440"
+    frame_color = "#BF616A"
     timeout = 0
     #icon = /usr/share/icons/Papirus/22x22/status/dialog-error.svg
