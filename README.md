@@ -1,11 +1,13 @@
-![dotfiles](https://raw.githubusercontent.com/crian/dotfiles/master/Pictures/header.png)
+![dotfiles](https://raw.githubusercontent.com/crian/dotfiles/samurai/Pictures/header.png)
 
 ## Preview
 
-![preview](https://raw.githubusercontent.com/crian/dotfiles/master/Pictures/screenshots/2019-09-24-144811_1920x1080_scrot.png)
+![preview](https://raw.githubusercontent.com/crian/dotfiles/samurai/Pictures/screenshots/2019-09-24-144811_1920x1080_scrot.png)
 
 ## Setup
 
+- Machine: `thinkpad t440p`
+- Hostname: `samurai`
 - Operating System: `arch`
 - Window Manager: `dwm`
 - Shell: `zsh`
