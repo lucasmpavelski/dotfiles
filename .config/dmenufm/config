@@ -1,0 +1,24 @@
+# FILES LOCATION
+export FM_PATH="$HOME/.config/dmenufm"
+export FM_CACHE_PATH="$HOME/.cache/dmenufm"
+export FM_BMKFILE="$FM_PATH/dmenufm_bookmark"
+export FM_CMDFILE="$FM_PATH/dmenufm_command"
+export FM_HISFILE="$FM_PATH/dmenufm_history"
+export FM_SDOPROP="$FM_PATH/dmenufm_sudoprompt"
+export FM_LASTPATH="$FM_CACHE_PATH/dmenufm_lastpath"
+export FM_REMFILE="$FM_CACHE_PATH/dmenufm_bulk_rename"
+export FM_MASFILE="$FM_CACHE_PATH/dmenufm_bulk_mass"
+export FM_ZIPATH="$FM_CACHE_PATH/compression/"
+export FM_TRASH="$FM_CACHE_PATH/trash"
+# Max number for history
+export FM_MAX_HIS_LENGTH=5000
+# FONTS
+export FM_GENERIC_FONT="crisp-12"
+export FM_NOTIF_FONT="crisp-12"
+export FM_DANGER_FONT="crisp-12"
+# COLORs
+export FM_GENERIC_COLOR="#81A1C1"
+export FM_SUDO_COLOR="red"
+export FM_ACTION_COLOR_LV1="#33691e"
+export FM_ACTION_COLOR_LV2="#FF8C00"
+export FM_ACTION_COLOR_BULK="#CB06CB"
