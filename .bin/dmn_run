@@ -7,4 +7,4 @@ y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
-dmenu_run -p "Run:" -i -f -fn "$font" -wi "$w"
+dmenu_run -p "Run:" -i -f -fn "$font"

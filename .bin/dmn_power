@@ -7,7 +7,7 @@ y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
-DIALOG_RESULT=$(echo -e 'lock\nlogout\nreboot\npoweroff\nexit' | dmenu -fn "$font" -wi "$w" -i -f -p "Power:" )
+DIALOG_RESULT=$(echo -e 'lock\nlogout\nreboot\npoweroff\nexit' | dmenu -fn "$font" -i -f -p "Power:" )
 
 echo "This result is : $DIALOG_RESULT"
 sleep 1;

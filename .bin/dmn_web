@@ -8,7 +8,7 @@ h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
 URL="https://www.google.com/search?q="
-QUERY=$(echo '' | dmenu -p "Web Search:" -i -f -fn "$font" -wi "$w")
+QUERY=$(echo '' | dmenu -p "Web Search:" -i -f -fn "$font")
 if [ -n "$QUERY" ]; then
 	google-chrome-stable --new-window "${URL}${QUERY}"
 fi
