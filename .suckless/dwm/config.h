@@ -90,7 +90,7 @@ static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "5%+", "unmut
 static const char *voldowncmd[] = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
 static const char *briupcmd[] = { "xbacklight", "-inc", "10", NULL };
 static const char *bridowncmd[] = { "xbacklight", "-dec", "10", NULL };
-static const char *plyrplay[] = { "playerctl", "play", NULL };
+static const char *plyrplay[] = { "playerctl", "play-pause", NULL };
 static const char *plyrstop[] = { "playerctl", "stop", NULL };
 static const char *plyrnext[] = { "playerctl", "next", NULL };
 static const char *plyrprev[] = { "playerctl", "previous", NULL };
@@ -110,7 +110,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F10,    spawn,          {.v = plyrstop } },
 	{ MODKEY,                       XK_F11,    spawn,          {.v = plyrnext } },
 	{ MODKEY,                       XK_F12,    spawn,          {.v = plyrprev } },
-	{ MODKEY,                       XK_b,      spawn,          ESHCMD("mimeopen -n $(dmn_browse)") },
+	{ MODKEY,                       XK_b,      spawn,          ESHCMD("dmenufm") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          ESHCMD("google-chrome-stable") },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          ESHCMD("pcmanfm") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          ESHCMD("spotify") },
@@ -159,6 +159,10 @@ static Key keys[] = {
 	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
 	{ 0,                            XF86XK_MonBrightnessUp,  spawn, {.v = briupcmd } },
 	{ 0,                            XF86XK_MonBrightnessDown,spawn, {.v = bridowncmd } },
+	{ 0,                            XF86XK_AudioNext,        spawn, {.v = plyrnext } },
+	{ 0,                            XF86XK_AudioPrev,        spawn, {.v = plyrprev } },
+	{ 0,                            XF86XK_AudioPlay,        spawn, {.v = plyrplay } },
+	{ 0,                            XF86XK_AudioStop,        spawn, {.v = plyrstop } },
 };
 
 /* button definitions */
