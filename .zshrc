@@ -34,11 +34,6 @@ if [ -f $HOME/.config/fff/config ]; then
     . $HOME/.config/fff/config
 fi
 
-# dmenufm config
-if [ -f $HOME/.config/dmenufm/config ]; then
-    . $HOME/.config/dmenufm/config
-fi
-
 # pfetch config
 export PF_INFO="title os kernel pkgs memory wm de shell term editor palette"
 
