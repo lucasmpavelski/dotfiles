@@ -1,6 +1,3 @@
-" Map leader to
-let mapleader=','
-
 " Vim-Plug
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -11,51 +8,26 @@ endif
 
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
-
 Plug 'itchyny/lightline.vim'
-	let g:lightline = { 'colorscheme': 'nord' }
-
 Plug 'arcticicestudio/nord-vim'
-
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'mitermayer/vim-prettier'
+Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/goyo.vim'
-
-Plug 'tpope/vim-surround'
-
 Plug 'junegunn/fzf.vim'
-	let g:fzf_action = {
-	  \ 'ctrl-t': 'tab split',
-	  \ 'ctrl-x': 'split',
-	  \ 'ctrl-v': 'vsplit' }
-	let g:fzf_layout = { 'down': '60%' }
-	let g:fzf_layout = { 'window': 'enew' }
-	let g:fzf_layout = { 'window': '-tabnew' }
-	let g:fzf_layout = { 'window': '10new' }
-	let g:fzf_colors =
-	\ { 'fg':      ['fg', 'Normal'],
-	  \ 'bg':      ['bg', 'Normal'],
-	  \ 'hl':      ['fg', 'Comment'],
-	  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-	  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-	  \ 'hl+':     ['fg', 'Statement'],
-	  \ 'info':    ['fg', 'PreProc'],
-	  \ 'border':  ['fg', 'Ignore'],
-	  \ 'prompt':  ['fg', 'Conditional'],
-	  \ 'pointer': ['fg', 'Exception'],
-	  \ 'marker':  ['fg', 'Keyword'],
-	  \ 'spinner': ['fg', 'Label'],
-	  \ 'header':  ['fg', 'Comment'] }
-	nnoremap <silent> <leader>f :FZF<cr>
-	nnoremap <silent> <leader>F :FZF ~<cr>
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	let g:deoplete#enable_at_startup = 1
-
-Plug 'dense-analysis/ale'
-	let g:ale_sign_column_always = 1
-	let g:ale_lint_on_text_changed = 'never'
-	let g:ale_fix_on_save = 1
-
+Plug 'tpope/vim-fugitive'
 call plug#end()
+
+"
+" General settings
+"
+
+" Map leader to
+let mapleader=','
 
 " Theme
 set background=dark
@@ -74,7 +46,6 @@ set nocompatible
 set noshowmode
 
 " Tabs
-"set expandtab
 set smarttab
 set shiftwidth=4
 set tabstop=4
@@ -112,17 +83,6 @@ set mouse=a
 set splitright
 set splitbelow
 
-" netrw settings
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-"augroup ProjectDrawer
-"  autocmd!
-"  autocmd VimEnter * :Vexplore
-"augroup END
-
 " Save the current buffer using the leader key
 noremap <leader>w :w<CR>
 
@@ -148,3 +108,61 @@ vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
+
+"
+" Plugin settings
+"
+
+" Lightline
+let g:lightline = { 'colorscheme': 'nord' }
+
+" Conquer of Completion
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" NERDTree
+map <leader>n :NERDTreeToggle<CR>
+let g:NERDTreeShowHidden=1
+let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeGitStatusWithFlags = 1
+let g:NERDTreeMinimalUI = 1
+
+" Prettier
+let g:prettier#quickfix_enabled = 0
+let g:prettier#quickfix_auto_focus = 0
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+" fzf
+let g:fzf_action = {
+\ 'ctrl-t': 'tab split',
+\ 'ctrl-x': 'split',
+\ 'ctrl-v': 'vsplit' }
+let g:fzf_layout = { 'down': '60%' }
+let g:fzf_layout = { 'window': 'enew' }
+let g:fzf_layout = { 'window': '-tabnew' }
+let g:fzf_layout = { 'window': '10new' }
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+\ 'bg':      ['bg', 'Normal'],
+\ 'hl':      ['fg', 'Comment'],
+\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+\ 'hl+':     ['fg', 'Statement'],
+\ 'info':    ['fg', 'PreProc'],
+\ 'border':  ['fg', 'Ignore'],
+\ 'prompt':  ['fg', 'Conditional'],
+\ 'pointer': ['fg', 'Exception'],
+\ 'marker':  ['fg', 'Keyword'],
+\ 'spinner': ['fg', 'Label'],
+\ 'header':  ['fg', 'Comment'] }
+nnoremap <silent> <leader>f :FZF<cr>
+nnoremap <silent> <leader>F :FZF ~<cr>
