@@ -35,7 +35,7 @@ if [ -f $HOME/.config/fff/config ]; then
 fi
 
 # pfetch config
-export PF_INFO="title os kernel pkgs memory wm de shell term editor palette"
+export PF_INFO="title os kernel pkgs memory wm shell term editor palette"
 
 # Options
 setopt INTERACTIVE_COMMENTS # Enable comments in interactive shell.
