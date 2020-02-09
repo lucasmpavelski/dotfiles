@@ -8,8 +8,8 @@ static const unsigned int barheight  = 6;        /* bar height */
 static const int showbar             = 1;        /* 0 means no bar */
 static const int topbar              = 1;        /* 0 means bottom bar */
 static const char *fonts[]           = {
-    "crisp:size=12:antialias=true:autohint=true",
-    "siji:size=12:antialias=true:autohint=true"
+    "IBM Plex Mono:size=10:antialias=true:autohint=true",
+    "siji:size=13:antialias=true:autohint=true"
 };
 static const char dmenufont[]        = "monospace:size=10";
 static const char normfgcolor[]      = "#d8dee9";
@@ -76,24 +76,24 @@ static const Layout layouts[] = {
 #define ESHCMD(cmd) SHCMD("exec " cmd)
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmn_run", dmenumon, NULL };
-static const char *dmenupwr[] = { "dmn_power", NULL };
-static const char *dmenuclp[] = { "dmn_clip", NULL };
-static const char *dmenuweb[] = { "dmn_web", NULL };
-static const char *dmenunet[] = { "networkmanager_dmenu", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static char dmenumon[2]            = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[]      = { "dmn_run", NULL };
+static const char *dmenupwr[]      = { "dmn_power", NULL };
+static const char *dmenuclp[]      = { "dmn_clip", NULL };
+static const char *dmenuweb[]      = { "dmn_web", NULL };
+static const char *dmenunet[]      = { "networkmanager_dmenu", NULL };
+static const char *termcmd[]       = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "70x20", NULL };
-static const char *mutecmd[] = { "amixer", "-q", "set", "Master", "toggle", NULL };
-static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "5%+", "unmute", NULL };
-static const char *voldowncmd[] = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
-static const char *briupcmd[] = { "xbacklight", "-inc", "10", NULL };
-static const char *bridowncmd[] = { "xbacklight", "-dec", "10", NULL };
-static const char *plyrplay[] = { "playerctl", "play-pause", NULL };
-static const char *plyrstop[] = { "playerctl", "stop", NULL };
-static const char *plyrnext[] = { "playerctl", "next", NULL };
-static const char *plyrprev[] = { "playerctl", "previous", NULL };
+static const char *mutecmd[]       = { "amixer", "-q", "set", "Master", "toggle", NULL };
+static const char *volupcmd[]      = { "amixer", "-q", "set", "Master", "5%+", "unmute", NULL };
+static const char *voldowncmd[]    = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
+static const char *briupcmd[]      = { "xbacklight", "-inc", "10", NULL };
+static const char *bridowncmd[]    = { "xbacklight", "-dec", "10", NULL };
+static const char *plyrplay[]      = { "playerctl", "play-pause", NULL };
+static const char *plyrstop[]      = { "playerctl", "stop", NULL };
+static const char *plyrnext[]      = { "playerctl", "next", NULL };
+static const char *plyrprev[]      = { "playerctl", "previous", NULL };
 
 #include <X11/XF86keysym.h>
 
@@ -110,7 +110,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F10,    spawn,          {.v = plyrstop } },
 	{ MODKEY,                       XK_F11,    spawn,          {.v = plyrnext } },
 	{ MODKEY,                       XK_F12,    spawn,          {.v = plyrprev } },
-	{ MODKEY,                       XK_b,      spawn,          ESHCMD("dmenufm") },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          ESHCMD("dmenufm") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          ESHCMD("google-chrome-stable") },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          ESHCMD("pcmanfm") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          ESHCMD("spotify") },
@@ -181,4 +181,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-

@@ -6,9 +6,9 @@ Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
-Xft.autohint: false
+Xft.autohint: true
 Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
+Xft.lcdfilter: lcdfilter
 
 !--------------
 ! Color Scheme
@@ -20,10 +20,9 @@ Xft.lcdfilter: lcddefault
 ! st config
 !-----------
 
-st*font: crisp:size=12:antialias=true:autohint=true
+st*font: IBM Plex Mono:size=10:antialias=true:autohint=true
 st*fontalt0: siji:size=12:antialias=true:autohint=true
 st*fontalt1: RobotoMono Nerd Font:size=12:antialias=true:autohint=true
-st*alpha: 1
 st*borderpx: 20
 
 !--------------
