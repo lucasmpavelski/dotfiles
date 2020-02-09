@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # create dir for git bare repo
 git init --bare $HOME/.dotfiles

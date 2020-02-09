@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # extremely simple system info script
 # requires: awk, grep, and bash v4+

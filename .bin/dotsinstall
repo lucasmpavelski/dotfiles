@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 git clone --bare https://github.com/crian/dotfiles.git $HOME/.dotfiles
 function dots {

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 read -p "1 - Full, 2 - Delay(5), 0 - Crop: " scr_scrot
 if [[ $scr_scrot == 0 ]]; then
