@@ -1,3 +1,7 @@
+""""""""""""""""
+" Plugin Manager
+"""""""""""""""" 
+
 " Vim-Plug
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -15,16 +19,16 @@ Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'mitermayer/vim-prettier'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot'
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
-"
+""""""""""""""""""
 " General settings
-"
+""""""""""""""""""
 
 " Map leader to
 let mapleader=','
@@ -109,60 +113,40 @@ vnoremap <leader>P "+P
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 
-"
+"""""""""""""""""
 " Plugin settings
-"
+"""""""""""""""""
 
 " Lightline
 let g:lightline = { 'colorscheme': 'nord' }
 
 " Conquer of Completion
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+	\ pumvisible() ? "\<C-n>" :
+	\ <SID>check_back_space() ? "\<TAB>" :
+	\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+let g:coc_global_extensions=[
+	\'coc-ccls',
+	\'coc-json',
+	\'coc-sh',
+	\'coc-vimlsp',
+	\]
 
 " NERDTree
-map <leader>n :NERDTreeToggle<CR>
+noremap <silent> <leader>n :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeGitStatusWithFlags = 1
 let g:NERDTreeMinimalUI = 1
 
-" Prettier
-let g:prettier#quickfix_enabled = 0
-let g:prettier#quickfix_auto_focus = 0
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+" Goyo
+noremap <silent> <leader>g :Goyo<CR>
 
-" fzf
-let g:fzf_action = {
-\ 'ctrl-t': 'tab split',
-\ 'ctrl-x': 'split',
-\ 'ctrl-v': 'vsplit' }
-let g:fzf_layout = { 'down': '60%' }
-let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
-let g:fzf_layout = { 'window': '10new' }
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-\ 'bg':      ['bg', 'Normal'],
-\ 'hl':      ['fg', 'Comment'],
-\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-\ 'hl+':     ['fg', 'Statement'],
-\ 'info':    ['fg', 'PreProc'],
-\ 'border':  ['fg', 'Ignore'],
-\ 'prompt':  ['fg', 'Conditional'],
-\ 'pointer': ['fg', 'Exception'],
-\ 'marker':  ['fg', 'Keyword'],
-\ 'spinner': ['fg', 'Label'],
-\ 'header':  ['fg', 'Comment'] }
-nnoremap <silent> <leader>f :FZF<cr>
-nnoremap <silent> <leader>F :FZF ~<cr>
+" Colorizer
+lua require'colorizer'.setup()
