@@ -22,6 +22,7 @@ export VISUAL="nvim"
 export EDITOR="nvim"
 export TERM="st"
 export TERMINAL=$TERM
+export BROWSER="brave"
 
 # Quote pasted URLs
 autoload -Uz url-quote-magic
