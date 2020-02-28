@@ -7,8 +7,8 @@ y=$(( $2 / 5 ))
 h=$(( $2 / 50 ))
 font="crisp:size=12:antialias=true:autohint=true"
 
-URL="https://www.google.com/search?q="
+URL="https://duckduckgo.com/?q="
 QUERY=$(echo '' | dmenu -p "Web Search:" -i -f)
 if [ -n "$QUERY" ]; then
-	google-chrome-stable --new-window "${URL}${QUERY}"
+	$BROWSER --new-window "${URL}${QUERY}"
 fi
