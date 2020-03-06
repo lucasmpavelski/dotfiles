@@ -15,7 +15,7 @@ PROMPT="%1~ %F{blue}>%f "
 #
 
 # Paths
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.bin:$PATH
+export PATH=$(du "$HOME/.bin" | cut -f2 | tr '\n' ':' | sed 's/:*$//'):$PATH
 
 # Variables
 export VISUAL="nvim"
@@ -23,6 +23,9 @@ export EDITOR="nvim"
 export TERM="st"
 export TERMINAL=$TERM
 export BROWSER="brave"
+
+# LS Colors
+eval $(dircolors ~/.dircolors)
 
 # Quote pasted URLs
 autoload -Uz url-quote-magic

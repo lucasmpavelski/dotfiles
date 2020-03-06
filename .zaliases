@@ -4,7 +4,7 @@
 
 alias e="$EDITOR"
 alias sz="source ~/.zshrc"
-alias ls="exa -F"
+alias ls="ls --color=auto"
 alias la="ls -a"
 alias ll="ls -la"
 alias grep="grep --color=auto"
