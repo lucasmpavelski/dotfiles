@@ -9,7 +9,7 @@ static const int showbar             = 1;        /* 0 means no bar */
 static const int topbar              = 1;        /* 0 means bottom bar */
 static const char *fonts[]           = {
     "IBM Plex Mono:size=10:antialias=true:autohint=true",
-    "siji:size=13:antialias=true:autohint=true"
+    "siji:size=12:antialias=true:autohint=true"
 };
 static const char dmenufont[]        = "monospace:size=10";
 static const char normfgcolor[]      = "#d8dee9";
@@ -40,7 +40,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "brave-browser",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -84,11 +84,11 @@ static const char *dmenunet[]      = { "networkmanager_dmenu", NULL };
 static const char *termcmd[]       = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "70x20", NULL };
-static const char *mutecmd[]       = { "amixer", "-q", "set", "Master", "toggle", NULL };
-static const char *volupcmd[]      = { "amixer", "-q", "set", "Master", "5%+", "unmute", NULL };
-static const char *voldowncmd[]    = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
-static const char *briupcmd[]      = { "xbacklight", "-inc", "10", NULL };
-static const char *bridowncmd[]    = { "xbacklight", "-dec", "10", NULL };
+static const char *mutecmd[]       = { "volmute", NULL };
+static const char *volupcmd[]      = { "volup", NULL };
+static const char *voldowncmd[]    = { "voldown", NULL };
+static const char *briupcmd[]      = { "briup", NULL };
+static const char *bridowncmd[]    = { "bridown", NULL };
 static const char *plyrplay[]      = { "playerctl", "play-pause", NULL };
 static const char *plyrstop[]      = { "playerctl", "stop", NULL };
 static const char *plyrnext[]      = { "playerctl", "next", NULL };

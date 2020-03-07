@@ -1,0 +1,4 @@
+#!/bin/sh
+
+time="$(date "+%H:%M")"
+echo -ne " ^c#A3BE8C^ ^d^${time} "

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mix=`amixer get Master | tail -1`
+vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+if [[ $mix == *\[off\]* ]]; then
+    echo -ne " ^c#8FBCBB^ ^d^Muted "
+elif [[ $mix == *\[on\]* ]]; then
+    echo -ne " ^c#88C0D0^ ^d^${vol}% "
+fi
