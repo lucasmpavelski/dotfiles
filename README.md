@@ -2,7 +2,7 @@
 
 ## Preview
 
-![preview](https://raw.githubusercontent.com/crian/dotfiles/samurai/Pictures/screenshots/2019-09-24-144811_1920x1080_scrot.png)
+![preview](https://raw.githubusercontent.com/crian/dotfiles/samurai/Pictures/screenshots/2020-03-09-181340_1920x2160_scrot.png)
 
 ## Setup
 
@@ -12,9 +12,9 @@
 - Window Manager: `dwm`
 - Shell: `zsh`
 - Terminal Emulator: `st`
-- File Manager: `fff, pcmanfm`
+- File Manager: `dmenufm, pcmanfm`
 - Application Launcher: `dmenu`
 - Compositor: `picom`
-- Bar: `dwm bar & status script`
+- Status Bar: `dwmblocks`
 - Notification: `dunst`
-- Text Editor: `nvim, nano, code`
+- Text Editor: `nvim, nano`
