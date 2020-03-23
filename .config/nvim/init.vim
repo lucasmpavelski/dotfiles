@@ -1,6 +1,6 @@
-"""""""""""""""""
+"----------------
 " Plugin Manager
-"""""""""""""""""
+"----------------
 
 " Vim-Plug
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
@@ -19,23 +19,21 @@ endif
 
 " Plugins
 call plug#begin(expand('~/.config/nvim/plugged'))
-
 Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/goyo.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf.vim'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
 Plug 'Yggdroot/indentLine'
 Plug 'jiangmiao/auto-pairs'
 Plug 'sheerun/vim-polyglot'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
 Plug 'psliwka/vim-smoothie'
 Plug 'farmergreg/vim-lastplace'
 Plug 'liuchengxu/vista.vim'
@@ -44,21 +42,26 @@ Plug 'easymotion/vim-easymotion'
 Plug '907th/vim-auto-save'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'lambdalisue/suda.vim'
+Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'luochen1990/rainbow'
 call plug#end()
 
-"""""""""""""""""""
+"------------------
 " General settings
-"""""""""""""""""""
+"------------------
 
 set termguicolors                                       " Opaque Background
 set mouse=a                                             " enable mouse scrolling
 set clipboard+=unnamedplus                              " use system clipboard by default
 filetype plugin indent on                               " enable indentations
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab autoindent            " tab key actions
+set tabstop=4 softtabstop=4 shiftwidth=4 autoindent     " tab key actions
 set incsearch ignorecase smartcase hlsearch             " highlight text while searching
 set list listchars=trail:»,tab:»-                       " use tab to navigate in list mode
-set fillchars+=vert:\▏                                  " requires a patched nerd font (try FiraCode)
+set fillchars+=vert:\▏                                  " requires a patched nerd font
 set wrap breakindent                                    " wrap long lines to the width set by tw
+set tw=90                                               " auto wrap lines that are longer than that
 set encoding=utf-8                                      " text encoding
 set number                                              " enable numbers on the left
 set relativenumber                                      " current line is 0
@@ -67,20 +70,33 @@ set title                                               " tab title as file file
 set conceallevel=2                                      " set this so we wont break indentation plugin
 set splitright                                          " open vertical split to the right
 set splitbelow                                          " open horizontal split to the bottom
-set tw=90                                               " auto wrap lines that are longer than that
 set emoji                                               " enable emojis
 let g:indentLine_setConceal = 0                         " actually fix the annoying markdown links conversion
 au BufEnter * set fo-=c fo-=r fo-=o                     " stop annoying auto commenting on new lines
 set history=1000                                        " history limit
 set backspace=indent,eol,start                          " sensible backspacing
 set undofile                                            " enable persistent undo
-set undodir=/tmp                                        " undo temp file directory
+set undodir=/tmp//                                      " undo temp file directory
+set backupdir=/tmp//                                    " backup temp file directory
+set directory=/tmp//                                    " swap temp file directory
 set foldlevel=0                                         " open all folds by default
 set inccommand=nosplit                                  " visual feedback while substituting
 let loaded_netrw = 0                                    " diable netew
 let g:omni_sql_no_default_maps = 1                      " disable sql omni completion
+set timeout timeoutlen=1000                             " longer leader key timeout
+set autoread                                            " re-read file if changed outside vim
+set lazyredraw                                          " no redraw wihle executing macros,...
+set synmaxcol=180                                       " avoid very slow redrawing
+" required by coc
+set hidden                                              " hide buffer when abandoned
+"set nobackup                                           " no backup file
+"set nowritebackup                                      " no backup before overwriting file
+set cmdheight=2                                         " number of lines for command-line
+set updatetime=300                                      " milliseconds before writing swap
+set shortmess+=c                                        " don't give |ins-completion-menu| messages
+set signcolumn=yes                                      " always draw signcolumn
 
-" Coloring
+" Colors
 set background=dark
 colorscheme nord
 let g:airline_theme='nord'
@@ -100,30 +116,10 @@ hi DiffAdd guibg='#0f111a'
 hi DiffChange guibg='#0f111a'
 " coc multi cursor highlight color
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
-" Ale
-highlight ALEErrorSign ctermfg=9 ctermbg=15 guifg=#C30500
-highlight ALEWarningSign ctermfg=11 ctermbg=15 guifg=#FFA500
-highlight ALEVirtualTextError ctermfg=9 ctermbg=15 guifg=#C30500
-highlight ALEVirtualTextWarning ctermfg=11 ctermbg=15 guifg=#FFA500
-" performance tweaks
-set nocursorline
-set nocursorcolumn
-set scrolljump=5
-set lazyredraw
-set synmaxcol=180
-set re=1
-" required by coc
-set hidden
-set nobackup
-set nowritebackup
-set cmdheight=2
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
 
-""""""""""""""""""
+"-----------------
 " Plugin settings
-""""""""""""""""""
+"-----------------
 
 " Airline
 let g:airline_powerline_fonts = 0
@@ -134,9 +130,19 @@ let g:airline_section_z = airline#section#create(['%3p%%  ',
             \ g:airline_symbols.linenr .' ', 'linenr', ':%c '])
 let g:airline_section_warning = ''
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'        " show only file name on tabs
-let g:airline#extensions#ale#enabled = 1                " ALE integration
-let g:airline#extensions#vista#enabled = 1              " vista integration
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#unicode#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#vista#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+let airline#extensions#coc#warning_symbol = ':'
+let airline#extensions#coc#error_symbol = ':'
+let g:airline#extensions#hunks#hunk_symbols = [':', ':', ':']
+let g:airline#extensions#branch#format = 2
 
 "" Conquer of Completion
 " use tab for completion trigger
@@ -166,59 +172,33 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 let g:coc_global_extensions = [
             \'coc-yank',
             \'coc-json',
-            \'coc-tsserver',
             \'coc-lists',
+            \'coc-syntax',
+            \'coc-git',
             \'coc-snippets',
             \'coc-ultisnips',
-            \'coc-python',
-            \'coc-xml',
-            \'coc-syntax',
-            \'coc-flutter',
-            \'coc-git'
             \]
 
-" ALE
-let g:ale_fixers = {
-            \'*': ['remove_trailing_lines', 'trim_whitespace'],
-            \'c' : ['clang-format'],
-            \'cpp' : ['clang-format'],
-            \'markdown' : ['prettier'],
-            \'json': ['prettier'],
-            \'python': ['autopep8'],
-            \}
-let g:ale_fix_on_save = 1
-let g:ale_linters_explicit = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_sign_warning = '⚠'
-let g:ale_sign_error = '✘'
-let g:ale_sign_info = ''
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '❯❯❯ '
-
 " indentLine
-let g:indentLine_char = '▏'
-let g:indentLine_color_gui = '#363949'
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_color_gui = '#565969'
 
-" startify
-let g:startify_session_persistence = 1
-let g:startify_fortune_use_unicode = 1
-let g:startify_enable_special = 0
+" rainbow brackets
+let g:rainbow_active = 1
 
 " easymotion
-let g:EasyMotion_startofline = 0                        " keep cursor column when JK motion
-let g:EasyMotion_smartcase = 1                          " ignore case
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_smartcase = 1
 
 " auto save
 let g:auto_save        = 0
-let g:auto_save_silent = 0
+let g:auto_save_silent = 1
 let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
 
 "" FZF
 " general
 let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-let $FZF_DEFAULT_OPTS="--reverse "                      " top to bottom
-
+let $FZF_DEFAULT_OPTS="--reverse "
 " use rg by default
 if executable('rg')
   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
@@ -231,9 +211,48 @@ lua require'colorizer'.setup()
 " Suda
 let g:suda_smart_edit = 1
 
-"""""""""""""""""""
+" Auto Pairs
+let g:AutoPairsMultilineClose = 0
+
+" Gitgutter
+let g:gitgutter_enabled = 1
+let g:gitgutter_grep=''
+
+" Vista
+let g:vista_executive_for = {
+      \ 'c': 'coc',
+      \ }
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista#renderer#enable_icon = 1
+let g:vista_sidebar_width = 50
+
+" NERDTree
+" if nerdtree is only window, kill nerdtree so buffer can die
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | :bdelete | endif
+let g:NERDTreeQuitOnOpen = 0
+let g:NERDTreeShowHidden = 1
+let g:NERDChristmasTree = 1
+let g:NERDTreeAutoCenter = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeWinSize = 30
+let g:NERDTreeDirArrowExpandable = '▷'
+let g:NERDTreeDirArrowCollapsible = '▼'
+let g:NERDTreeIndicatorMapCustom = {
+        \ "modified"  : "✹",
+        \ "staged"    : "✚",
+        \ "untracked" : "✭",
+        \ "renamed"   : "➜",
+        \ "unmerged"  : "═",
+        \ "deleted"   : "✖",
+        \ "dirty"     : "✗",
+        \ "clean"     : "✔︎",
+        \ 'ignored'   : '☒',
+        \ "unknown"   : "?"
+        \ }
+
+"------------------
 " Filetype configs
-"""""""""""""""""""
+"------------------
 
 " enable spell only if file type is normal text
 let spellable = ['markdown', 'gitcommit', 'txt', 'text']
@@ -242,27 +261,13 @@ autocmd BufEnter * if index(spellable, &ft) < 0 | set nospell | else | set spell
 " open help in vertical split
 autocmd FileType help wincmd L
 
-" startify when there is no open buffer left
-autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
-
-" open startify on start
-autocmd VimEnter * if argc() == 0 | Startify | endif
-
 " open files preview on enter and provided arg is a folder
-autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | Startify | endif
 autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | execute 'cd' fnameescape(argv()[0])  | endif
 autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | Files | endif
 
-" auto html tags closing, enable for markdown files as well
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.md'
-
-" disable autosave on kernel directory and also formatting on save (we dont wanna fuck this up)
-autocmd BufRead,BufNewFile */Dark-Ages/* let b:auto_save = 0
-autocmd BufRead,BufNewFile */Dark-Ages/* let b:ale_fix_on_save = 0
-
-""""""""""""
+"-----------
 " Functions
-""""""""""""
+"-----------
 
 " files window with preview
 command! -bang -nargs=? -complete=dir Files
@@ -311,38 +316,43 @@ function! s:show_documentation()
   endif
 endfunction
 
-"""""""""""
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+"----------
 " Mappings
-"""""""""""
+"----------
 
 " general
 let mapleader=","
 nnoremap ; :
-nmap \ <leader>q
-map <F6> :Startify <CR>
-map <F4> :Vista!!<CR>
-nmap <leader>r :so ~/.config/nvim/init.vim<CR>
+nmap <leader>w :w<CR>
+nmap <leader>wq :wq<CR>
+noremap <C-q> :q!<CR>
 nmap <leader>q :bd<CR>
-map <leader>v :Vista finder<CR>
+nmap \ <leader>q
+noremap <leader>e :PlugInstall<CR>
+nmap <leader>r :so ~/.config/nvim/init.vim<CR>
+nmap <Tab> :bnext<CR>
+nmap <S-Tab> :bprevious<CR>
 nnoremap <silent> <leader>f :Files<CR>
 nmap <leader>b :Buffers<CR>
 nmap <leader>c :Commands<CR>
-map <leader>/ :Rg<CR>
-nmap <leader>w :w<CR>
+map <leader>rg :Rg<CR>
+map <leader>v :Vista finder<CR>
+map <F4> :Vista!!<CR>
+map <F5> :NERDTreeToggle<CR>
 nmap <leader>g :Goyo<CR>
-nmap <Tab> :bnext<CR>
-nmap <S-Tab> :bprevious<CR>
-noremap <leader>e :PlugInstall<CR>
-noremap <C-q> :q<CR>
-inoremap jj <ESC>
 noremap <silent> <esc><esc> :noh<return>
 
 " use a different buffer for dd
 nnoremap d "_d
 vnoremap d "_d
 
-" emulate windows copy, cut behavior
-vnoremap <LeftRelease> "+y<LeftRelease>
+" emulate windows copy/cut behavior
 vnoremap <C-c> "+y<CR>
 vnoremap <C-x> "+d<CR>
 
@@ -390,11 +400,8 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
 " fugitive mappings
 map <leader>d :Gdiffsplit<CR>
+
+" Vimagit
+map <leader>m :Magit<CR>

@@ -1,16 +1,15 @@
 {
+  // preferences
   "coc.preferences.colorSupport": true,
+  "coc.preferences.snippetStatusText": "Ⓢ ",
+  // suggest
+  "suggest.noselect": false,
+  "suggest.detailField": "abbr",
+  "suggest.snippetIndicator": "",
+  "suggest.removeDuplicateItems": true,
   "suggest.triggerAfterInsertEnter": true,
   "suggest.timeout": 2000,
-  "suggest.detailField": "abbr",
-  "suggest.snippetIndicator": "~",
-  "diagnostic.displayByAle": true,
-  "diagnostic.refreshOnInsertMode": true,
-  "diagnostic.signOffset": 999999,
-  "python.autoComplete.addBrackets": true,
-  "python.jediEnabled": true,
-  "suggest.noselect": false,
-  "flutter.lsp.initialization.closingLabels": true,
+  "suggest.minTriggerInputLength": 1,
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
     "method": "\uf6a6",
@@ -37,5 +36,31 @@
     "reference": "\uf87a",
     "typeParameter": "\uf278",
     "default": "\uf29c"
-  }
+  },
+  // diagnostic
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.signOffset": 999999,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.refreshAfterSave": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualTextPrefix": "❯❯❯ ",
+  "diagnostic.virtualText": true,
+  "diagnostic.locationlist": true,
+  "diagnostic.enableMessage": "never",
+  // list
+  "list.source.grep.command": "rg",
+  // git
+  "git.enableGutters": true,
+  "git.branchCharacter":"\uf408",
+  "git.addGBlameToBufferVar": true,
+  "git.addGBlameToVirtualText": false,
+  "git.virtualTextPrefix": "❯❯❯ ",
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
 }
