@@ -43,6 +43,9 @@ xsetroot -cursor_name left_ptr
 # load monitor calibration profile
 xcalib -d :0 $HOME/.local/share/color/B140HAN01_2.icm
 
+# set wallpaper
+setwall &
+
 # start dwm
 while true; do
     # Log stderror to a file 
