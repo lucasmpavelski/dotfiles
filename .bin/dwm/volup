@@ -1,4 +1,0 @@
-#!/bin/sh
-
-amixer -q set Master 5%+ umute
-pkill -RTMIN+10 dwmblocks

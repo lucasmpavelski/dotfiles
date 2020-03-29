@@ -1,0 +1,13 @@
+#!/bin/sh
+
+mute() { amixer sset Master toggle ;}
+up() { amixer sset Master 5%+ ;}
+down() { amixer sset Master 5%- ;}
+
+case "$1" in
+	mute) mute ;;
+	up) up ;;
+	down) down ;;
+esac >/dev/null
+
+pkill -RTMIN+10 dwmblocks &

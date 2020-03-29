@@ -1,4 +1,0 @@
-#!/bin/sh
-
-amixer -q set Master toggle
-pkill -RTMIN+10 dwmblocks
