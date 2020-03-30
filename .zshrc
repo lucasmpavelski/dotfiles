@@ -153,7 +153,7 @@ fi
 # Configuration
 export FZF_DEFAULT_COMMAND='fd -t f -L -H -c always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--ansi --height 60% --border --preview "bat --color always {}" --preview-window :70%'
+export FZF_DEFAULT_OPTS='--ansi --height 60% --border --preview "bat --color always --theme="base16" {}" --preview-window :70%'
 
 #
 # History
