@@ -6,9 +6,68 @@
 # Prompt
 #
 
-# Colorful prompt
+# Prerequisites
 autoload -U colors && colors
-PROMPT="%1~ %F{blue}>%f "
+autoload -Uz vcs_info
+setopt PROMPT_SUBST
+
+# Prompt
+PROMPT='$(dir)$(bgjobs)$(symbol)'
+RPROMPT='${vcs_info_msg_0_}'
+
+# Directory
+dir() {
+  echo -n "%{$fg[white]%}%c "
+}
+
+# Background jobs
+bgjobs() {
+  echo -n "%{$fg[yellow]%}%(1j.↓%j .)"
+}
+
+# Symbol
+symbol() {
+  echo -n "%(?.%F{blue}.%F{red})❯%f "
+}
+
+# Git status
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*' check-for-changes true
+zstyle ':vcs_info:git*' use-prompt-escapes true
+zstyle ':vcs_info:git*' stagedstr "%F{green}●%f"
+zstyle ':vcs_info:git*' unstagedstr "%F{yellow}●%f"
+
+precmd() {
+  if [[ -z $(git ls-files --other --exclude-standard -- $(git rev-parse --show-cdup 2>/dev/null) 2>/dev/null) ]]; then
+      untracked=''
+  else
+      untracked="%F{red}●%f"
+  fi
+
+  if [ -d .git ]; then
+    if [[ $(git remote) != "" ]]; then
+      branch="$(git rev-parse --abbrev-ref HEAD)"
+      behind="$(git rev-list --right-only --count $branch...origin/$branch)"
+      ahead="$(git rev-list --left-only --count $branch...origin/$branch)"
+
+      if [[ $ahead -ne 0 ]]; then
+        ahead="%F{cyan}↑$ahead%f"
+      else
+        ahead=""
+      fi
+
+      if [[ $behind -ne 0 ]]; then
+        behind="%F{magenta}↓$behind%f"
+      else
+        behind=""
+      fi
+    fi
+  fi
+
+  zstyle ':vcs_info:git*' formats "%b%c%u$untracked%{$reset_color%} $ahead$behind"
+  zstyle ':vcs_info:git*' actionformats "(%a|%b)%c%u$untracked%{$reset_color%} $ahead$behind"
+  vcs_info
+}
 
 #
 # Environment
@@ -43,9 +102,9 @@ zle -N self-insert url-quote-magic
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 
-# fff config
-if [ -f $HOME/.config/fff/config ]; then
-    . $HOME/.config/fff/config
+# Custom lf icons
+if [ -f $HOME/.config/lf/icons ]; then
+    . $HOME/.config/lf/icons
 fi
 
 # pfetch config
@@ -153,7 +212,11 @@ fi
 # Configuration
 export FZF_DEFAULT_COMMAND='fd -t f -L -H -c always'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--ansi --height 60% --border --preview "bat --color always --theme="base16" {}" --preview-window :70%'
+export FZF_DEFAULT_OPTS='
+	--ansi --height 60% --border
+	--color fg:#D8DEE9,bg:#2E3440,hl:#A3BE8C,fg+:#D8DEE9,bg+:#434C5E,hl+:#A3BE8C
+	--color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
+	--preview "bat --color always --theme="base16" {}" --preview-window :70%'
 
 #
 # History
