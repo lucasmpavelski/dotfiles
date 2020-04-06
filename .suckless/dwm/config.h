@@ -5,6 +5,7 @@ static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 10;       /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int barheight = 6;        /* bar height */
+static const unsigned int statuspad = 4;        /* status padding */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = {
@@ -16,7 +17,7 @@ static const char normfgcolor[]      = "#d8dee9";
 static const char normbgcolor[]      = "#2e3440";
 static const char normbordercolor[]  = "#3b4252";
 static const char selfgcolor[]       = "#81a1c1";
-static const char selbgcolor[]       = "#2e3440";
+static const char selbgcolor[]       = "#3b4252";
 static const char selbordercolor[]   = "#81a1c1";
 static const char titlefgcolor[]     = "#a3be8c";
 static const char titlebgcolor[]     = "#2e3440";
@@ -25,7 +26,7 @@ static const char *colors[][3]       = {
 	/*                fg            bg                border   */
 	[SchemeNorm]  = { normfgcolor,  normbgcolor,      normbordercolor },
 	[SchemeSel]   = { selfgcolor,   selbgcolor,       selbordercolor },
-	[SchemeTitle] = { titlefgcolor, titlebordercolor, titlebordercolor },
+	[SchemeTitle] = { titlefgcolor, titlebgcolor,     titlebordercolor },
 };
 
 /* tagging */
@@ -39,6 +40,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
+	{ "floatst",  NULL,       NULL,       0,            1,           1,           -1 },
 };
 
 /* layout(s) */
@@ -101,6 +103,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,      spawn,          {.v = dmenunet } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = tabterm } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMD("st -c floatst") },
 	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_F9,     spawn,          {.v = plyrplay } },
 	{ MODKEY,                       XK_F10,    spawn,          {.v = plyrstop } },
