@@ -16,5 +16,5 @@ static const Block blocks[] = {
     {"", "~/.config/dwm/blocks/time", 60, 0},
 };
 
-//sets delimeter between status commands. NULL character ('\0') means no delimeter.
-static char delim = ' ';
+//sets delimeter between status commands. NULL pointer means no delimeter.
+static const char * delim = "  ";
