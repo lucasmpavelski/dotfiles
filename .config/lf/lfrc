@@ -36,7 +36,7 @@ cmd delete ${{
 cmd moveto ${{
 	set -f
 	clear; echo "Move to where?"
-	dest="$(~/.config/lf/dirs | fzf)" &&
+	dest="$(cat ~/.config/lf/dirs | fzf --preview '')" &&
 	eval mv -iv $fx $dest &&
 	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
 }}
@@ -44,7 +44,7 @@ cmd moveto ${{
 cmd copyto ${{
 	set -f
 	clear; echo "Copy to where?"
-	dest="$(~/.config/lf/dirs | fzf)" &&
+	dest="$(cat ~/.config/lf/dirs | fzf --preview '')" &&
 	eval cp -ivr $fx $dest &&
 	notify-send "📋 File(s) copied." "File(s) copies to $dest."
 }}
@@ -54,9 +54,9 @@ cmd bulkrename ${{
 }}
 
 # Bindings
-map c $lf -remote "send $id cd $(~/.config/lf/dirs | fzf)"
+map c $lf -remote "send $id cd $(cat ~/.config/lf/dirs | fzf --preview '')"
 map <c-f> $lf -remote "send $id select '$(fzf)'"
-map J $lf -remote "send $id cd $(~/.config/lf/dirs | fzf)"
+map J $lf -remote "send $id cd $(cat ~/.config/lf/dirs | fzf --preview '')"
 map gh
 map g top
 map D delete
