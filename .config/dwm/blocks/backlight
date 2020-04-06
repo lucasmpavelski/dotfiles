@@ -1,4 +1,4 @@
 #!/bin/sh
 
 backlight="$(xbacklight | sed 's/\..*//')"
-echo -ne " ^c#81A1C1^ ^d^${backlight}% "
+printf "%s%%\n" "^c#81A1C1^ ^d^${backlight}"

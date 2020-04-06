@@ -11,4 +11,4 @@ elif [ $wifistatus == "up" ]; then
 else
     netstatus="^c#B48EAD^ ^d^Disco"
 fi
-echo -ne " $netstatus "
+printf "%s\n" "$netstatus"
