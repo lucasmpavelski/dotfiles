@@ -7,7 +7,7 @@ wifiperc="$(grep "^\s*w" /proc/net/wireless | awk '{ print int($3 * 100 / 70) "%
 if [ $ethstatus == "up" ]; then
     netstatus="^c#B48EAD^ ^d^Ether"
 elif [ $wifistatus == "up" ]; then
-    netstatus="^c#B48EAD^ ^d^${wifiperc}"
+    netstatus="^c#B48EAD^ ^d^$wifiperc"
 else
     netstatus="^c#B48EAD^ ^d^Disco"
 fi

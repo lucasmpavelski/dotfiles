@@ -5,5 +5,11 @@ vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
 if [[ $mix == *\[off\]* ]]; then
     printf "^c#8FBCBB^ ^d^Muted"
 elif [[ $mix == *\[on\]* ]]; then
-    printf "%s%%\n" "^c#88C0D0^ ^d^${vol}"
+    case ${vol%?} in
+           10) i='' ;;
+        [6-9]) i='' ;;
+        [3-5]) i='' ;;
+            *) i=''
+    esac
+    printf "%s%%\n" "^c#88C0D0^$i^d^ $vol"
 fi

@@ -2,9 +2,13 @@
 
 status="$(cat /sys/class/power_supply/AC/online)"
 battery="$(cat /sys/class/power_supply/BAT0/capacity)"
-timer="$(acpi -b | grep "Battery" | awk '{print $5}' | cut -c 1-5)"
-if [ "${status}" == 1 ]; then
-    printf "%s%%\n" "^c#EBCB8B^ ^d^${battery}"
-else
-    printf "%s%%\n" "^c#EBCB8B^ ^d^${battery}"
-fi
+
+case $status in
+    1) i='' ;;
+    0) case ${battery%?} in
+        [6-9]) i='' ;;
+        [1-5]) i='' ;;
+            *) i=''
+       esac
+esac
+printf "%s%%\n" "^c#EBCB8B^$i^d^ $battery"
