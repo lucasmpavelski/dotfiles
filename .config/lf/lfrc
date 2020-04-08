@@ -4,71 +4,121 @@ set previewer ~/.config/lf/preview
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
-set color256
-set icons
-set hidden
-set drawbox
+set color256 true
+set icons true
+set hidden true
+set drawbox true
 
 # cmds/functions
 cmd open ${{
     case $(file --mime-type $f -b) in
-    	text/troff) man ./ $f;;
+        text/troff) man ./ $f;;
         text/*) $EDITOR $fx;;
-	image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
-	image/*) rotdir $f | setsid sxiv -aio 2>/dev/null | lf-select & ;;
-	audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
-	video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
-	application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
+        image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
+        image/*) setsid sxiv -aio 2>/dev/null ;;
+        audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
+        video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
+        application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
         *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
     esac
 }}
 
-cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-
-cmd delete ${{
-	set -f
-	printf "%s\n\t" "$fx"
-	printf "delete?[y/N]"
-	read ans
-	[ $ans = "y" ] && rm -rf $fx
+cmd jumptodir ${{
+    lf -remote "send $id cd $(cd $HOME && fd -a -H -t d -d 2 | fzf --preview '')"
 }}
 
 cmd moveto ${{
-	set -f
-	clear; echo "Move to where?"
-	dest="$(cat ~/.config/lf/dirs | fzf --preview '')" &&
-	eval mv -iv $fx $dest &&
-	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+    echo "Move to where?"
+    dest="$(cd $HOME && fd -a -H -t d | fzf --preview '')" &&
+    eval mv -iv $fx $dest &&
+    notify-send "File(s) moved to $dest"
 }}
 
 cmd copyto ${{
-	set -f
-	clear; echo "Copy to where?"
-	dest="$(cat ~/.config/lf/dirs | fzf --preview '')" &&
-	eval cp -ivr $fx $dest &&
-	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+    echo "Copy to where?"
+    dest="$(cd $HOME && fd -a -H -t d | fzf --preview '')" &&
+    eval cp -ivr $fx $dest &&
+    notify-send "File(s) copied to $dest"
 }}
 
-cmd bulkrename ${{
-    vidir
+cmd mkdir ${{
+    printf "Directory Name: "
+    read ans
+    mkdir $ans
 }}
+
+cmd mkfile ${{
+    printf "File Name: "
+    read ans
+    $EDITOR $ans
+}}
+
+cmd chmod ${{
+    printf "Change mode: "
+    read ans
+    for file in "$fx"; do
+        chmod $ans $file
+    done
+}}
+
+cmd trash ${{
+    printf "%s\n\t" "$fx"
+    printf "Move to trash?[y/N]"
+    read ans
+    [ $ans = "y" ] &&
+    files=$(printf "$fx" | tr '\n' ';')
+    while [ "$files" ]; do
+        file=${files%%;*}
+        trash-put "$(basename "$file")"
+        if [ "$files" = "$file" ]; then
+            files=''
+        else
+            files="${files#*;}"
+        fi
+    done
+    notify-send "$file moved to trash"
+}}
+
+cmd cleartrash ${{
+	printf "Clear trash?[y/N]"
+	read ans
+	[ $ans = "y" ] && trash-empty &&
+	notify-send "Cleared trash"
+}}
+
+cmd restoretrash ${{
+	printf "Restore from trash?[y/N]"
+	read ans
+	[ $ans = "y" ] && trash-restore &&
+	notify-send "Restored from trash"
+}}
+
+cmd opentrash ${{
+    lf -remote "send $id cd ~/.local/share/Trash/files"
+}}
+
+cmd rename %[ -e $1 ] && printf "File exists" || mv $f $1
+
+cmd setwp %setwall "$f"
 
 # Bindings
-map c $lf -remote "send $id cd $(cat ~/.config/lf/dirs | fzf --preview '')"
-map <c-f> $lf -remote "send $id select '$(fzf)'"
-map J $lf -remote "send $id cd $(cat ~/.config/lf/dirs | fzf --preview '')"
-map gh
-map g top
-map D delete
+map m
+map c
+map J jumptodir
 map C copyto
 map M moveto
-map a push %mkdir<space>
+map md mkdir
+map mf mkfile
+map cm chmod
+map w setwp
+map T opentrash
+map td trash
+map tc cleartrash
+map tr restoretrash
 map r push :rename<space>
-map R $lf -remote "send $id push :rename<space>$f"
-map b bulkrename
-map <c-r> reload
+map R reload
 map <enter> shell
-map x $$f
+map g top
+map x cut
 map X !$f
-map o &mimeopen "$f"
-map O $mimeopen --ask "$f"
+map o $mimeopen --ask "$f"
