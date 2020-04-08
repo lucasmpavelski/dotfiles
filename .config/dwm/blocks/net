@@ -1,7 +1,7 @@
 #!/bin/sh
 
-ethstatus=$(cat /sys/class/net/enp0s25/operstate)
-wifistatus=$(cat /sys/class/net/wlp3s0/operstate)
+ethstatus="$(cat /sys/class/net/enp0s25/operstate)"
+wifistatus="$(cat /sys/class/net/wlp3s0/operstate)"
 wifissid="$(nmcli -t -f NAME connection show --active)"
 wifiperc="$(grep "^\s*w" /proc/net/wireless | awk '{ print int($3 * 100 / 70) "%" }')"
 if [ $ethstatus == "up" ]; then
