@@ -21,6 +21,6 @@ Xft.lcdfilter: lcdfilter
 !-----------
 
 st*font: IBM Plex Mono:size=10:antialias=true:autohint=true
-st*fontalt0: siji:size=12:antialias=true:autohint=true
-st*fontalt1: RobotoMono Nerd Font:size=12:antialias=true:autohint=true
+st*fontalt0: RobotoMono Nerd Font:size=10:antialias=true:autohint=true
+st*fontalt1: Symbola:size=10:antialias=true:autohint=true
 st*borderpx: 20
