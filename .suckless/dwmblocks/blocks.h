@@ -5,7 +5,7 @@ static const Block blocks[] = {
 
     {"", "~/.config/dwm/blocks/net", 10, 0},
 
-    {"", "~/.config/dwm/blocks/power", 5, 0},
+    {"", "~/.config/dwm/blocks/battery", 5, 0},
 
     {"", "~/.config/dwm/blocks/backlight", 0, 11},
 
