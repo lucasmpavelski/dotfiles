@@ -60,8 +60,8 @@ set tabstop=4 softtabstop=4 shiftwidth=4 autoindent     " tab key actions
 set incsearch ignorecase smartcase hlsearch             " highlight text while searching
 set list listchars=trail:»,tab:»-                       " use tab to navigate in list mode
 set fillchars+=vert:\▏                                  " requires a patched nerd font
-set wrap breakindent                                    " wrap long lines to the width set by tw
-set tw=90                                               " auto wrap lines that are longer than that
+"set wrap breakindent                                   " wrap long lines to the width set by tw
+"set tw=90                                              " auto wrap lines that are longer than that
 set encoding=utf-8                                      " text encoding
 set number                                              " enable numbers on the left
 set relativenumber                                      " current line is 0
@@ -83,9 +83,10 @@ set foldlevel=0                                         " open all folds by defa
 set inccommand=nosplit                                  " visual feedback while substituting
 let loaded_netrw = 0                                    " diable netew
 let g:omni_sql_no_default_maps = 1                      " disable sql omni completion
-set timeout timeoutlen=1000                             " longer leader key timeout
+"set timeout timeoutlen=1000                            " longer leader key timeout
 set autoread                                            " re-read file if changed outside vim
 set lazyredraw                                          " no redraw wihle executing macros,...
+set redrawtime=10000                                    " redraw time
 set synmaxcol=180                                       " avoid very slow redrawing
 " required by coc
 set hidden                                              " hide buffer when abandoned
@@ -101,7 +102,7 @@ set background=dark
 colorscheme nord
 let g:airline_theme='nord'
 highlight Pmenu guibg='00010a' guifg=white              " popup menu colors
-highlight Comment gui=bold                              " bold comments
+highlight Comment gui=italic cterm=italic               " italic comments
 highlight Normal gui=none
 highlight NonText guibg=none
 highlight clear SignColumn                              " use number color for sign column color
@@ -112,8 +113,9 @@ hi clear CursorLineNr                                   " use the theme color fo
 hi CursorLineNr gui=bold                                " make relative number bold
 hi EasyMotionMoveHL guibg=#b16286 guifg=#ebdbb2 gui=NONE
 " colors for git (especially the gutter)
-hi DiffAdd guibg='#0f111a'
-hi DiffChange guibg='#0f111a'
+hi DiffAdd  guibg=#0f111a guifg=#43a047
+hi DiffChange guibg=#0f111a guifg=#fdd835
+hi DiffRemoved guibg=#0f111a guifg=#e53935
 " coc multi cursor highlight color
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
 
@@ -250,9 +252,9 @@ let g:NERDTreeIndicatorMapCustom = {
         \ "unknown"   : "?"
         \ }
 
-"------------------
-" Filetype configs
-"------------------
+"---------------
+" Auto commands
+"---------------
 
 " enable spell only if file type is normal text
 let spellable = ['markdown', 'gitcommit', 'txt', 'text']
@@ -264,6 +266,13 @@ autocmd FileType help wincmd L
 " open files preview on enter and provided arg is a folder
 autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | execute 'cd' fnameescape(argv()[0])  | endif
 autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | Files | endif
+
+" relative numbers on normal mode only
+augroup numbertoggle
+    autocmd!
+    autocmd InsertLeave * set relativenumber
+    autocmd InsertEnter * set norelativenumber
+augroup END
 
 "-----------
 " Functions
