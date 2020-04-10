@@ -36,22 +36,22 @@ if [[ "$1" == 'r' ]] && [[ -z $(pacman -Qs yay) ]]; then
 fi
 
 case $1 in
-  b ) # Create list of official repository packages (core, extra, community)
-      echo -e "$info Creating list of official (core/extra/community packages) packages installed."
-      # Create list, remove local, base
-      pacman -Qqe | grep -vx "$(pacman -Qqg base)" | grep -vx "$(pacman -Qqm)" > "$pkglsoff"
-      # Create list of local packages
-      echo -e "$info Creating list of local (includes AUR) packages installed."
-      pacman -Qqm > "$pkglsloc"
-      echo -e "$pass Official package list saved to ${txtund}"$pkglsoff"${txtrst}"
-      echo -e "$pass Local package list saved to ${txtund}"$pkglsloc"${txtrst}" ;;
-  r )  # Update repository database, then restore packages from list
-      echo -e "$info Installing packages from lists"
-      sudo pacman -Sy
-      # use -f to overwrite conflicting files
-      sudo pacman -S --needed $(cat "$pkglsoff")
-      # Restore local packages with yay
-      yay -S $(cat "$pkglsloc") ;;
-  * ) echo -e " pacbac b - build installed packages list. (dir:${txtund}"${pkglsoff%/*}"${txtrst})"
-      echo -e " pacbac r - restore installed packages from package list." ;;
+    -b) # Create list of official repository packages
+        echo -e "$info Creating list of official packages installed."
+        # Create list, remove local
+        pacman -Qqe | grep -vx "$(pacman -Qqm)" > "$pkglsoff"
+        # Create list of local packages
+        echo -e "$info Creating list of local (includes AUR) packages installed."
+        pacman -Qqm > "$pkglsloc"
+        echo -e "$pass Official package list saved to ${txtund}"$pkglsoff"${txtrst}"
+        echo -e "$pass Local package list saved to ${txtund}"$pkglsloc"${txtrst}" ;;
+    -r) # Update repository database, then restore packages from list
+        echo -e "$info Installing packages from lists"
+        sudo pacman -Sy
+        # use -f to overwrite conflicting files
+        sudo pacman -S --needed $(cat "$pkglsoff")
+        # Restore local packages with yay
+        yay -S $(cat "$pkglsloc") ;;
+    *)  echo -e " pacbac -b - build installed packages list. (dir:${txtund}"${pkglsoff%/*}"${txtrst})"
+        echo -e " pacbac -r - restore installed packages from package list." ;;
 esac
