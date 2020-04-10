@@ -15,7 +15,7 @@ cmd open ${{
         text/troff) man ./ $f;;
         text/*) $EDITOR $fx;;
         image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
-        image/*) setsid sxiv -aio 2>/dev/null ;;
+        image/*) setsid sxiv -aio $f >/dev/null 2>&1 & ;;
         audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
         video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
         application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
@@ -101,6 +101,10 @@ cmd rename %[ -e $1 ] && printf "File exists" || mv $f $1
 
 cmd setwp %setwall "$f"
 
+cmd term ${{
+    ( $TERM & ) &>/dev/null
+}}
+
 # Bindings
 map m
 map c
@@ -118,6 +122,7 @@ map tr restoretrash
 map r push :rename<space>
 map R reload
 map <enter> shell
+map <c-t> term
 map g top
 map x cut
 map X !$f
