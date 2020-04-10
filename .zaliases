@@ -4,9 +4,9 @@
 
 alias e="$EDITOR"
 alias sz="source ~/.zshrc"
-alias ls="ls -CF --color=auto"
-alias la="ls -a"
-alias ll="ls -la"
+alias ls="ls -h --color=auto --group-directories-first"
+alias la="ls -A"
+alias ll="ls -lA"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias cp="cp -i"
