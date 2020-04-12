@@ -1,10 +1,10 @@
 #!/bin/sh
 
-mix=`amixer get Master | tail -1`
-vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-if [[ $mix == *\[off\]* ]]; then
+mute="$(pulsemixer --get-mute)"
+vol="$(pulsemixer --get-volume | awk '{print $1}')"
+if [[ $mute == 1 ]]; then
     printf "^c#8FBCBB^ ^d^Muted"
-elif [[ $mix == *\[on\]* ]]; then
+elif [[ $mute == 0 ]]; then
     case ${vol%?} in
            10) i='' ;;
         [6-9]) i='' ;;

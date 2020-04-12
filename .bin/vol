@@ -1,8 +1,8 @@
 #!/bin/sh
 
-mute() { amixer sset Master toggle ;}
-up() { amixer sset Master 5%+ unmute ;}
-down() { amixer sset Master 5%- unmute ;}
+mute() { pulsemixer --toggle-mute ;}
+up() { pulsemixer --change-volume +5 --unmute ;}
+down() { pulsemixer --change-volume -5 --unmute ;}
 
 case "$1" in
 	mute) mute ;;
