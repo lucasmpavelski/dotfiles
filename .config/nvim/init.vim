@@ -42,7 +42,7 @@ Plug 'easymotion/vim-easymotion'
 Plug '907th/vim-auto-save'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'lambdalisue/suda.vim'
-Plug 'scrooloose/nerdtree', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
+Plug 'preservim/nerdtree', { 'on': [ 'NERDTreeToggle', 'NERDTreeFind' ] }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'luochen1990/rainbow'
@@ -57,6 +57,7 @@ set mouse=a                                             " enable mouse scrolling
 set clipboard+=unnamedplus                              " use system clipboard by default
 filetype plugin indent on                               " enable indentations
 set tabstop=4 softtabstop=4 shiftwidth=4 autoindent     " tab key actions
+set expandtab                                           " convert tabs to spaces
 set incsearch ignorecase smartcase hlsearch             " highlight text while searching
 set list listchars=trail:»,tab:»-                       " use tab to navigate in list mode
 set fillchars+=vert:\▏                                  " requires a patched nerd font
@@ -273,6 +274,9 @@ augroup numbertoggle
     autocmd InsertLeave * set relativenumber
     autocmd InsertEnter * set norelativenumber
 augroup END
+
+" remove trialing whitespaces and newline on save
+autocmd BufWritepre * %s/\n\+\%$//e
 
 "-----------
 " Functions
