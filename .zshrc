@@ -34,14 +34,14 @@ symbol() {
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*' check-for-changes true
 zstyle ':vcs_info:git*' use-prompt-escapes true
-zstyle ':vcs_info:git*' stagedstr "%F{green}●%f"
-zstyle ':vcs_info:git*' unstagedstr "%F{yellow}●%f"
+zstyle ':vcs_info:git*' stagedstr "%F{green}%f"
+zstyle ':vcs_info:git*' unstagedstr "%F{yellow}%f"
 
 precmd() {
   if [[ -z $(git ls-files --other --exclude-standard -- $(git rev-parse --show-cdup 2>/dev/null) 2>/dev/null) ]]; then
       untracked=''
   else
-      untracked="%F{red}●%f"
+      untracked="%F{red}%f"
   fi
 
   if [ -d .git ]; then
@@ -64,8 +64,10 @@ precmd() {
     fi
   fi
 
-  zstyle ':vcs_info:git*' formats "%b%c%u$untracked%{$reset_color%} $ahead$behind"
-  zstyle ':vcs_info:git*' actionformats "(%a|%b)%c%u$untracked%{$reset_color%} $ahead$behind"
+  gitsymbol="%F{blue}%f"
+
+  zstyle ':vcs_info:git*' formats "$gitsymbol %b%c%u$untracked%{$reset_color%} $ahead$behind"
+  zstyle ':vcs_info:git*' actionformats "$gitsymbol (%a|%b)%c%u$untracked%{$reset_color%} $ahead$behind"
   vcs_info
 }
 
