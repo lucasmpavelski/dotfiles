@@ -46,6 +46,9 @@ xcalib -d :0 $HOME/.local/share/color/B140HAN01_2.icm
 # set wallpaper
 setwall &
 
+#
+xautolock -time 30 -locker slock &
+
 # start dwm
 while true; do
     # Log stderror to a file 
