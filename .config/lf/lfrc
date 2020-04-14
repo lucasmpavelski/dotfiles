@@ -4,18 +4,16 @@ set previewer ~/.config/lf/preview
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
-set color256 true
-set icons true
-set hidden true
-set drawbox true
+set color256
+set icons
+set hidden
+set drawbox
 
 # cmds/functions
 cmd open ${{
     case $(file --mime-type $f -b) in
-        text/troff) man ./ $f;;
-        text/*) $EDITOR $fx;;
-        image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
-        image/*) setsid sxiv -aio $f >/dev/null 2>&1 & ;;
+        text/*) setsid $TERMINAL -e $EDITOR $fx >/dev/null 2>&1 & ;;
+        image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\)\(_large\)*$" | setsid sxiv -aio 2>/dev/null | lf-select & ;;
         audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
         video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
         application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
@@ -28,16 +26,16 @@ cmd jumptodir ${{
 }}
 
 cmd moveto ${{
-    echo "Move to where?"
+    printf "Move to where?"
     dest="$(cd $HOME && fd -a -H -t d | fzf --preview '')" &&
-    eval mv -iv $fx $dest &&
+    mv -iv $fx $dest &&
     notify-send "File(s) moved to $dest"
 }}
 
 cmd copyto ${{
-    echo "Copy to where?"
+    printf "Copy to where?"
     dest="$(cd $HOME && fd -a -H -t d | fzf --preview '')" &&
-    eval cp -ivr $fx $dest &&
+    cp -ivr $fx $dest &&
     notify-send "File(s) copied to $dest"
 }}
 
@@ -102,28 +100,29 @@ cmd rename %[ -e $1 ] && printf "File exists" || mv $f $1
 cmd setwp %setwall "$f"
 
 cmd term ${{
-    ( $TERM & ) &>/dev/null
+    ( $TERMINAL & ) &>/dev/null
 }}
 
 # Bindings
 map m
 map c
+map R reload
+map T term
 map J jumptodir
 map C copyto
 map M moveto
 map md mkdir
 map mf mkfile
-map cm chmod
-map w setwp
-map T opentrash
+map mc chmod
+map to opentrash
 map td trash
 map tc cleartrash
 map tr restoretrash
+map w setwp
 map r push :rename<space>
-map R reload
 map <enter> shell
-map <c-t> term
 map g top
 map x cut
+map d delete
 map X !$f
 map o $mimeopen --ask "$f"
