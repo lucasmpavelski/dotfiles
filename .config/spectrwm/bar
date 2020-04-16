@@ -1,0 +1,66 @@
+#!/bin/sh
+
+print_battery() {
+    status="$(cat /sys/class/power_supply/AC/online)"
+    battery="$(cat /sys/class/power_supply/BAT0/capacity)"
+    case $status in
+        1) i='' ;;
+        0) case ${battery%?} in
+            [6-9]) i='' ;;
+            [1-5]) i='' ;;
+                *) i=''
+           esac
+    esac
+    printf "%s%%\n" "+@fg=6;$i+@fg=0; $battery"
+}
+
+print_backlight() {
+    backlight="$(xbacklight | sed 's/\..*//')"
+    printf "%s%%\n" "+@fg=5;+@fg=0; $backlight"
+}
+
+print_net() {
+    ethstatus="$(cat /sys/class/net/enp0s25/operstate)"
+    wifistatus="$(cat /sys/class/net/wlp3s0/operstate)"
+    wifissid="$(nmcli -t -f NAME connection show --active)"
+    wifiperc="$(grep "^\s*w" /proc/net/wireless | awk '{ print int($3 * 100 / 70) "%" }')"
+    if [ $ethstatus == "up" ]; then
+        netstatus="+@fg=4;+@fg=0; Ether"
+    elif [ $wifistatus == "up" ]; then
+        netstatus="+@fg=4;+@fg=0; $wifiperc"
+    else
+        netstatus="+@fg=4;+@fg=0; Disco"
+    fi
+    printf "%s\n" "$netstatus"
+}
+
+print_volume() {
+    mute="$(pulsemixer --get-mute)"
+    vol="$(pulsemixer --get-volume | awk '{print $1}')"
+    if [[ $mute == 1 ]]; then
+        printf "+@fg=3;+@fg=0; Muted"
+    elif [[ $mute == 0 ]]; then
+        case ${vol%?} in
+               10) i='' ;;
+            [6-9]) i='' ;;
+            [3-5]) i='' ;;
+                *) i=''
+        esac
+        printf "%s%%\n" "+@fg=3;$i+@fg=0; $vol"
+    fi
+}
+
+print_date() {
+    date="$(LC_ALL=C date "+%a %d %b")"
+    printf "%s\n" "+@fg=2;+@fg=0; $date"
+}
+
+print_time() {
+    time="$(date "+%H:%M")"
+    printf "%s\n" "+@fg=1;+@fg=0; $time"
+}
+
+while true; do
+	echo "$(print_net)  $(print_battery)  $(print_backlight)  $(print_volume)  $(print_date)  $(print_time)"
+    sleep 1
+done
