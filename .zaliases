@@ -1,0 +1,21 @@
+#
+# ~/.zaliases
+#
+
+alias e="$EDITOR"
+alias sz="source ~/.zshrc"
+alias ls="ls -h --color=auto --group-directories-first"
+alias la="ls -A"
+alias ll="ls -lA"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
+alias cp="cp -i"
+alias df="df -h"
+alias c="clear"
+alias pac="sudo pacman --color=auto"
+alias yu="yay -Syu --devel --timeupdate"
+alias merge="xrdb -merge ~/.Xresources"
+alias mirrors="sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose"
+alias temp="watch sensors"
+alias dots="/usr/bin/git --git-dir=/home/crian/.dotfiles/ --work-tree=/home/crian"
+alias wttr="curl -s wttr.in/Jülich"

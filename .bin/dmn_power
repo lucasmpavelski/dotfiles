@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -- $(dimensions) "$@"
+w=$(echo "$1 - 2" | bc)
+x=$(( $1 / 2 - $w / 2 ))
+y=$(( $2 / 5 ))
+h=$(( $2 / 50 ))
+font="crisp:size=12:antialias=true:autohint=true"
+
+DIALOG_RESULT=$(echo -e 'lock\nlogout\nreboot\npoweroff\nexit' | dmenu -i -f -p "Power:" )
+
+echo "This result is : $DIALOG_RESULT"
+sleep 1;
+
+if [ "$DIALOG_RESULT" = "lock" ];
+then
+    exec slock
+elif [ "$DIALOG_RESULT" = "logout" ];
+then
+    exec killall xinit
+elif [ "$DIALOG_RESULT" = "reboot" ];
+then
+    exec systemctl reboot
+elif [ "$DIALOG_RESULT" = "poweroff" ];
+then
+    exec systemctl poweroff
+elif [ "$DIALOG_RESULT" = "exit" ];
+then
+    exit 0
+fi

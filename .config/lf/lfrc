@@ -1,0 +1,128 @@
+# Basic vars
+set shell sh
+set previewer ~/.config/lf/preview
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 10
+set color256
+set icons
+set hidden
+set drawbox
+
+# cmds/functions
+cmd open ${{
+    case $(file --mime-type $f -b) in
+        text/*) setsid $TERMINAL -e $EDITOR $fx >/dev/null 2>&1 & ;;
+        image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\)\(_large\)*$" | setsid sxiv -aio 2>/dev/null | lf-select & ;;
+        audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
+        video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
+        application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
+        *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
+    esac
+}}
+
+cmd jumptodir ${{
+    lf -remote "send $id cd $(cd $HOME && fd -a -H -t d -d 2 | fzf --preview '')"
+}}
+
+cmd moveto ${{
+    printf "Move to where?"
+    dest="$(cd $HOME && fd -a -H -t d | fzf --preview '')" &&
+    mv -iv $fx $dest &&
+    notify-send "File(s) moved to $dest"
+}}
+
+cmd copyto ${{
+    printf "Copy to where?"
+    dest="$(cd $HOME && fd -a -H -t d | fzf --preview '')" &&
+    cp -ivr $fx $dest &&
+    notify-send "File(s) copied to $dest"
+}}
+
+cmd mkdir ${{
+    printf "Directory Name: "
+    read ans
+    mkdir $ans
+}}
+
+cmd mkfile ${{
+    printf "File Name: "
+    read ans
+    $EDITOR $ans
+}}
+
+cmd chmod ${{
+    printf "Change mode: "
+    read ans
+    for file in "$fx"; do
+        chmod $ans $file
+    done
+}}
+
+cmd trash ${{
+    printf "%s\n\t" "$fx"
+    printf "Move to trash?[y/N]"
+    read ans
+    [ $ans = "y" ] &&
+    files=$(printf "$fx" | tr '\n' ';')
+    while [ "$files" ]; do
+        file=${files%%;*}
+        trash-put "$(basename "$file")"
+        if [ "$files" = "$file" ]; then
+            files=''
+        else
+            files="${files#*;}"
+        fi
+    done
+    notify-send "$file moved to trash"
+}}
+
+cmd cleartrash ${{
+	printf "Clear trash?[y/N]"
+	read ans
+	[ $ans = "y" ] && trash-empty &&
+	notify-send "Cleared trash"
+}}
+
+cmd restoretrash ${{
+	printf "Restore from trash?[y/N]"
+	read ans
+	[ $ans = "y" ] && trash-restore &&
+	notify-send "Restored from trash"
+}}
+
+cmd opentrash ${{
+    lf -remote "send $id cd ~/.local/share/Trash/files"
+}}
+
+cmd rename %[ -e $1 ] && printf "File exists" || mv $f $1
+
+cmd setwp %setwall "$f"
+
+cmd term ${{
+    ( $TERMINAL & ) &>/dev/null
+}}
+
+# Bindings
+map m
+map c
+map R reload
+map T term
+map J jumptodir
+map C copyto
+map M moveto
+map md mkdir
+map mf mkfile
+map mc chmod
+map to opentrash
+map td trash
+map tc cleartrash
+map tr restoretrash
+map w setwp
+map r push :rename<space>
+map <enter> shell
+map g top
+map x cut
+map d delete
+map X !$f
+map o $mimeopen --ask "$f"
