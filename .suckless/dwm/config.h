@@ -17,16 +17,16 @@ static const char normfgcolor[]      = "#ebdbb2";
 static const char normbgcolor[]      = "#282828";
 static const char normbordercolor[]  = "#928374";
 static const char selfgcolor[]       = "#458588";
-static const char selbgcolor[]       = "#282828";
+static const char selbgcolor[]       = "#32302f";
 static const char selbordercolor[]   = "#458588";
 static const char titlefgcolor[]     = "#98971a";
 static const char titlebgcolor[]     = "#282828";
 static const char titlebordercolor[] = "#282828";
 static const char *colors[][3]       = {
-	/*                fg            bg                border   */
-	[SchemeNorm]  = { normfgcolor,  normbgcolor,      normbordercolor },
-	[SchemeSel]   = { selfgcolor,   selbgcolor,       selbordercolor },
-	[SchemeTitle] = { titlefgcolor, titlebgcolor,     titlebordercolor },
+	/*                fg            bg              border           */
+	[SchemeNorm]  = { normfgcolor,  normbgcolor,    normbordercolor  },
+	[SchemeSel]   = { selfgcolor,   selbgcolor,     selbordercolor   },
+	[SchemeTitle] = { titlefgcolor, titlebgcolor,   titlebordercolor },
 };
 
 /* tagging */
